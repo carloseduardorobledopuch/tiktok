@@ -1,59 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="lock.js" defer></script>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Complete Order Allocation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Allocation Verification</title>
+  
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/checkout.css">
+  
+  <script src="js/lock.js" defer></script>
+  
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <style>
-    body { 
-      font-family: 'IBM Plex Mono', monospace; 
-      background: #ffffff; 
-      color: #000000; 
-      -webkit-font-smoothing: antialiased; 
-      letter-spacing: -0.04em;
-    }
-    .form-input { 
-      width: 100%; 
-      padding: 12px; 
-      font-size: 13px; 
-      border: 1px solid #000; 
-      background: #fff; 
-      color: #000; 
-      outline: none; 
-      border-radius: 0; 
-      text-transform: uppercase; 
-    }
-    .form-input::placeholder { color: #999; }
-    .btn-submit-action { 
-      width: 100%; 
-      background: #000; 
-      color: #fff; 
-      border: 1px solid #000; 
-      padding: 18px; 
-      text-transform: uppercase; 
-      font-weight: 700; 
-      cursor: pointer; 
-      font-size: 13px; 
-      letter-spacing: 0.05em; 
-      transition: all 0.2s ease;
-    }
-    .btn-submit-action:hover { background: #fff; color: #000; }
-  </style>
 </head>
-<body class="min-h-screen flex items-center justify-center">
-
-  <div class="w-full max-w-xl p-8 md:p-10 bg-white">
+<body class="min-h-screen flex items-center justify-center p-2 sm:p-4">
+  <div class="w-full max-w-xl p-4 sm:p-6 bg-white">
     <div class="border border-black p-6 mb-8 text-center bg-zinc-50">
       <span class="text-sm font-bold block uppercase tracking-wider mb-1" id="ui-summary-name">LOADING ALLOCATION...</span>
       <span class="text-xs text-zinc-500 block mb-3" id="ui-summary-breakdown">—</span>
       <div class="border-t border-black pt-3 flex justify-between items-center text-sm font-bold uppercase">
-        <span>Total Cost</span>
-        <span id="ui-summary-total">$0.00</span>
+        <span>Total Cost</span><span id="ui-summary-total">$0.00</span>
       </div>
     </div>
 
@@ -69,46 +38,21 @@
           <input type="email" id="contact-email" name="Contact_Email" class="form-input" required autocomplete="email" placeholder="YOUR EMAIL">
         </div>
       </div>
-
+      
       <div>
         <h3 class="text-sm font-bold uppercase border-b border-black pb-2 mb-4 tracking-wider">Shipping Address</h3>
         <div class="flex flex-col gap-4">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="flex flex-col gap-1">
-              <label for="first-name" class="text-xs font-bold uppercase tracking-wide">First Name</label>
-              <input type="text" id="first-name" name="First_Name" class="form-input" required autocomplete="given-name" placeholder="FIRST NAME">
-            </div>
-            <div class="flex flex-col gap-1">
-              <label for="last-name" class="text-xs font-bold uppercase tracking-wide">Last Name</label>
-              <input type="text" id="last-name" name="Last_Name" class="form-input" required autocomplete="family-name" placeholder="LAST NAME">
-            </div>
+            <div class="flex flex-col gap-1"><label for="first-name" class="text-xs font-bold uppercase tracking-wide">First</label><input type="text" id="first-name" name="First_Name" class="form-input" required placeholder="FIRST NAME"></div>
+            <div class="flex flex-col gap-1"><label for="last-name" class="text-xs font-bold uppercase tracking-wide">Last</label><input type="text" id="last-name" name="Last_Name" class="form-input" required placeholder="LAST NAME"></div>
           </div>
-          
-          <div class="flex flex-col gap-1">
-            <label for="address" class="text-xs font-bold uppercase tracking-wide">Street Address</label>
-            <input type="text" id="address" name="Shipping_Address" class="form-input" required autocomplete="shipping street-address" placeholder="STREET ADDRESS">
-          </div>
-          
-          <div class="flex flex-col gap-1">
-            <label for="address2" class="text-xs font-bold uppercase tracking-wide">Extra (Apt, Suite, Etc.)</label>
-            <input type="text" id="address2" name="Shipping_Address_Line2" class="form-input" autocomplete="address-line2" placeholder="APT, SUITE, ETC.">
-          </div>
-
+          <div class="flex flex-col gap-1"><label for="address" class="text-xs font-bold uppercase tracking-wide">Street</label><input type="text" id="address" name="Shipping_Address" class="form-input" required placeholder="STREET ADDRESS"></div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="flex flex-col gap-1">
-              <label for="city" class="text-xs font-bold uppercase tracking-wide">City</label>
-              <input type="text" id="city" name="Shipping_City" class="form-input" required autocomplete="address-level2" placeholder="CITY">
-            </div>
-            <div class="flex flex-col gap-1">
-              <label for="country" class="text-xs font-bold uppercase tracking-wide">Country</label>
-              <select id="country" name="Shipping_Country" class="form-input h-[45px]" required autocomplete="country">
-                <option disabled selected value="US">United States</option>
-              </select>
-            </div>
+            <div class="flex flex-col gap-1"><label for="city" class="text-xs font-bold uppercase tracking-wide">City</label><input type="text" id="city" name="Shipping_City" class="form-input" required placeholder="CITY"></div>
+            <div class="flex flex-col gap-1"><label for="country" class="text-xs font-bold uppercase tracking-wide">Country</label><select id="country" name="Shipping_Country" class="form-input h-[45px]" required><option value="US">United States</option></select></div>
           </div>
         </div>
       </div>
-
       <button type="submit" class="btn-submit-action mt-2" id="submitBtn">Complete Order</button>
     </form>
   </div>
@@ -119,30 +63,24 @@
       const prodName = urlParams.get('prod') || "PRODUCT ALLOCATION";
       const prodQty = urlParams.get('qty') || "1";
       const prodPrice = urlParams.get('price') || "$0.00";
-
       const numericPrice = parseFloat(prodPrice.replace(/[^0-9.]/g, '')) || 0;
       const calculatedBasePrice = (numericPrice / parseInt(prodQty)).toFixed(2);
       const currencyPrefix = (prodPrice.match(/^[^0-9.]+/) || ["$"])[0];
       const currencySuffix = (prodPrice.match(/[A-Za-z ]+$/) || [""])[0];
-      const baseFormatted = currencyPrefix + calculatedBasePrice + currencySuffix;
-
+      
       document.getElementById("ui-summary-name").innerText = prodName;
-      document.getElementById("ui-summary-breakdown").innerText = `${prodQty} x ${baseFormatted}`;
+      document.getElementById("ui-summary-breakdown").innerText = `${prodQty} x ${currencyPrefix}${calculatedBasePrice}${currencySuffix}`;
       document.getElementById("ui-summary-total").innerText = prodPrice;
-
       document.getElementById("form-prod-name").value = prodName;
       document.getElementById("form-prod-qty").value = prodQty;
       document.getElementById("form-prod-price").value = prodPrice;
-
+      
       document.getElementById("checkoutForm").addEventListener("submit", function (event) {
         event.preventDefault();
-        var btn = document.getElementById("submitBtn");
-        btn.innerText = "PROCESSING DISPATCH...";
+        var btn = document.getElementById("submitBtn"); 
+        btn.innerText = "PROCESSING DISPATCH..."; 
         btn.disabled = true;
-
-        setTimeout(function() {
-          window.location.href = "https://www.google.com";
-        }, 800);
+        setTimeout(function() { window.top.location.href = "https://www.google.com"; }, 800);
       });
     });
   </script>
