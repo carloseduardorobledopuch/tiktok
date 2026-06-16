@@ -46,7 +46,7 @@
 </head>
 <body class="min-h-screen flex items-center justify-center">
 
-  <div class="w-full max-w-xl border border-black p-8 md:p-10 bg-white">
+  <div class="w-full max-w-xl p-8 md:p-10 bg-white">
     <div class="border border-black p-6 mb-8 text-center bg-zinc-50">
       <span class="text-sm font-bold block uppercase tracking-wider mb-1" id="ui-summary-name">LOADING ALLOCATION...</span>
       <span class="text-xs text-zinc-500 block mb-3" id="ui-summary-breakdown">—</span>
@@ -102,7 +102,6 @@
               <label for="country" class="text-xs font-bold uppercase tracking-wide">Country</label>
               <select id="country" name="Shipping_Country" class="form-input h-[45px]" required autocomplete="country">
                 <option disabled selected value="US">United States</option>
-       
               </select>
             </div>
           </div>
@@ -115,30 +114,25 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // Parse data parameters passing from the URL
       const urlParams = new URLSearchParams(window.location.search);
       const prodName = urlParams.get('prod') || "PRODUCT ALLOCATION";
       const prodQty = urlParams.get('qty') || "1";
       const prodPrice = urlParams.get('price') || "$0.00";
 
-      // Calculate unit base price from final string
       const numericPrice = parseFloat(prodPrice.replace(/[^0-9.]/g, '')) || 0;
       const calculatedBasePrice = (numericPrice / parseInt(prodQty)).toFixed(2);
       const currencyPrefix = (prodPrice.match(/^[^0-9.]+/) || ["$"])[0];
       const currencySuffix = (prodPrice.match(/[A-Za-z ]+$/) || [""])[0];
       const baseFormatted = currencyPrefix + calculatedBasePrice + currencySuffix;
 
-      // Inject details dynamically into summary UI
       document.getElementById("ui-summary-name").innerText = prodName;
       document.getElementById("ui-summary-breakdown").innerText = `${prodQty} x ${baseFormatted}`;
       document.getElementById("ui-summary-total").innerText = prodPrice;
 
-      // Map params forward to target functional inputs
       document.getElementById("form-prod-name").value = prodName;
       document.getElementById("form-prod-qty").value = prodQty;
       document.getElementById("form-prod-price").value = prodPrice;
 
-      // Form Submit Handler
       document.getElementById("checkoutForm").addEventListener("submit", function (event) {
         event.preventDefault();
         var btn = document.getElementById("submitBtn");
@@ -146,7 +140,6 @@
         btn.disabled = true;
 
         setTimeout(function() {
-          // Success redirect target
           window.location.href = "https://www.google.com";
         }, 800);
       });
