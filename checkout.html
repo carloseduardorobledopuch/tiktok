@@ -44,7 +44,7 @@
     .btn-submit-action:hover { background: #fff; color: #000; }
   </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-6 md:p-12">
+<body class="min-h-screen flex items-center justify-center">
 
   <div class="w-full max-w-xl border border-black p-8 md:p-10 bg-white">
     <div class="border border-black p-6 mb-8 text-center bg-zinc-50">
@@ -101,11 +101,8 @@
             <div class="flex flex-col gap-1">
               <label for="country" class="text-xs font-bold uppercase tracking-wide">Country</label>
               <select id="country" name="Shipping_Country" class="form-input h-[45px]" required autocomplete="country">
-                <option disabled selected value="">SELECT COUNTRY</option>
-                <option value="US">United States</option>
-                <option value="CA">Canada</option>
-                <option value="GB">United Kingdom</option>
-                <option value="AU">Australia</option>
+                <option disabled selected value="US">United States</option>
+       
               </select>
             </div>
           </div>
