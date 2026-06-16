@@ -5,104 +5,71 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Jack & Rose | K1 Travel Steamer</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  
   <script src="images.js" defer></script>
-  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    /* 1. LOCK VIEWPORT - ABSOLUTELY NO SCROLLING */
     ::-webkit-scrollbar { display: none; }
     html, body { 
-      font-family: 'IBM Plex Mono', 'YZY Plex Mono', monospace; 
+      font-family: 'IBM Plex Mono', monospace; 
       font-variant-numeric: normal; 
       font-feature-settings: 'zero' 0;
       background: #ffffff; 
       color: #000000; 
       -webkit-font-smoothing: antialiased; 
-      -moz-osx-font-smoothing: grayscale;
-      margin: 0;
-      padding: 0;
-      width: 100vw;
-      height: 100dvh;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      -ms-overflow-style: none; 
+      margin: 0; padding: 0;
+      width: 100vw; height: 100dvh;
+      overflow: hidden; 
+      display: flex; flex-direction: column;
       scrollbar-width: none;
     }
     * { box-sizing: border-box; font-family: inherit; letter-spacing: -0.04em; }
     
-    /* 2. THREE-TIER APP LAYOUT */
     .app-header { display: flex; justify-content: space-between; align-items: flex-start; padding: 24px; flex-shrink: 0; z-index: 10; }
     .app-main { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; overflow: hidden; padding: 0 24px; }
+    .app-bottom-bar { display: flex; justify-content: space-between; align-items: center; padding: 24px; flex-shrink: 0; z-index: 10; }
     
-    /* Typography */
     .logo { font-size: 14px; font-weight: 700; text-decoration: none; color: #000; letter-spacing: 0.15em; text-transform: uppercase; }
     .product-title { font-size: 24px; font-weight: 700; line-height: 1; text-transform: uppercase; text-align: right; }
     .product-price { font-size: 14px; font-weight: 500; text-align: right; margin-top: 4px; }
 
-    /* 3. ONE-LINE BOTTOM CONTROL BAR */
-    .app-bottom-bar { display: flex; justify-content: space-between; align-items: center; padding: 24px; flex-shrink: 0; z-index: 10; }
     .bottom-left { display: flex; gap: 24px; flex: 1; align-items: center; }
     .ui-link { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #888; cursor: pointer; transition: color 0.2s; white-space: nowrap; }
     .ui-link:hover { color: #000; }
-    
     .bottom-center { flex: 1; text-align: center; font-size: 10px; font-weight: 700; color: #888; letter-spacing: 0.15em; text-transform: uppercase; user-select: none; }
     .bottom-right { display: flex; gap: 12px; flex: 1; justify-content: flex-end; align-items: center; }
     
-    /* Boxy Custom Quantity Component */
     .qty-container { display: flex; align-items: center; border: 1px solid #000; height: 50px; background: #fff; }
     .qty-btn { width: 40px; height: 100%; background: none; border: none; font-size: 18px; cursor: pointer; color: #000; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
     .qty-btn:active { background: #eee; }
     .qty-input { width: 40px; height: 100%; border: none; border-left: 1px solid #000; border-right: 1px solid #000; text-align: center; font-size: 14px; font-weight: 700; color: #000; background: transparent; pointer-events: none; outline: none; padding: 0; }
     
-    /* Boxy Brutalist Action Button */
     .btn-buy { display: flex; align-items: center; justify-content: center; height: 50px; background: #000; color: #fff; padding: 0 30px; font-size: 13px; font-weight: 700; text-transform: uppercase; border: 1px solid #000; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; }
     .btn-buy:hover { background: #fff; color: #000; }
     .btn-buy:active { transform: scale(0.98); }
     
-    /* 4. GALLERY LAYOUT */
     .gallery-wrapper { width: 100%; max-width: 500px; height: 60vh; position: relative; display: flex; justify-content: center; align-items: center; }
     .main-image-display { width: 100%; height: 100%; position: relative; }
     .gallery-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; transition: opacity 0.2s ease; pointer-events: none; }
     .gallery-img.active { opacity: 1; pointer-events: auto; }
-    
     .gallery-counter { font-size: 11px; letter-spacing: 0.1em; color: #888; font-weight: 700; margin-top: 16px; user-select: none; }
     
-    /* 5. UNIFIED MODAL SYSTEM */
     .css-toggle { display: none; }
     .yzy-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; background: rgba(0,0,0,0.6); z-index: 9999; display: flex; justify-content: center; align-items: center; padding: 20px; opacity: 0; transition: opacity 0.25s ease; backdrop-filter: blur(2px); pointer-events: none; }
     .yzy-modal-body { background: #ffffff; width: 100%; max-width: 640px; max-height: 90dvh; overflow-y: auto; padding: 50px 30px 35px; border: 1px solid #000; position: relative; transform: scale(0.97); transition: transform 0.25s ease; text-align: left; }
     .yzy-modal-close { position: absolute; top: 0; right: 0; width: 50px; height: 50px; background: transparent; border: none; cursor: pointer; z-index: 50; color: #000; display: flex; justify-content: center; align-items: center; transition: opacity 0.2s ease; }
     .yzy-modal-close:hover { opacity: 0.4; }
-    .overlay-bg-close { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: default; }
+    .overlay-bg-close { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
     
     .modal-title { font-size: 14px; font-weight: 700; text-transform: uppercase; margin-bottom: 24px; border-bottom: 1px solid #000; padding-bottom: 8px; }
     .modal-text-block { font-size: 13px; color: #444; line-height: 1.5; margin-bottom: 20px; }
     .modal-text-block h4 { color: #000; font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
     
     #toggle-details:checked ~ #modal-details,
-    #toggle-policies:checked ~ #modal-policies,
-    #toggle-checkout:checked ~ #modal-checkout { opacity: 1; pointer-events: auto; }
+    #toggle-policies:checked ~ #modal-policies { opacity: 1; pointer-events: auto; }
     #toggle-details:checked ~ #modal-details .yzy-modal-body,
-    #toggle-policies:checked ~ #modal-policies .yzy-modal-body,
-    #toggle-checkout:checked ~ #modal-checkout .yzy-modal-body { transform: scale(1); }
-    
-    .form-wrapper { width: 100%; display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
-    .form-input-container { display: flex; flex-direction: column; width: 100%; text-align: left; }
-    .form-input-container label { font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; color: #000; letter-spacing: 0.05em; }
-    .form-input { width: 100%; padding: 12px; font-size: 13px; border: 1px solid #000; background: #fff; color: #000; outline: none; border-radius: 0; -webkit-appearance: none; text-transform: uppercase; }
-    .form-input::placeholder { color: #999; text-transform: uppercase; }
-    .form-multi-column-container { display: flex; width: 100%; gap: 12px; }
-    .btn-submit-action { width: 100%; background: #000; color: #fff; border: 1px solid #000; padding: 18px; text-transform: uppercase; font-weight: 700; cursor: pointer; margin-top: 15px; font-size: 13px; letter-spacing: 0.05em; text-align: center; }
-    .btn-submit-action:hover { background: #fff; color: #000; }
-    
-    .checkout-summary { width: 100%; background: #fff; border: 1px solid #000; padding: 16px; margin-bottom: 24px; text-align: center; }
-    .summary-item-name { font-size: 13px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; display: block; }
-    .summary-item-breakdown { font-size: 11px; color: #666; margin-bottom: 10px; display: block; }
-    .summary-total-line { border-top: 1px solid #000; padding-top: 8px; margin-top: 4px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 700; text-transform: uppercase; }
+    #toggle-policies:checked ~ #modal-policies .yzy-modal-body { transform: scale(1); }
     
     @media (max-width: 768px) {
       .app-header { padding: 16px; align-items: center; }
@@ -112,7 +79,6 @@
       .bottom-right { justify-content: space-between; order: 2; width: 100%; }
       .btn-buy { flex-grow: 1; margin-left: 12px; padding: 0; }
       .bottom-center { order: 3; padding-top: 6px; font-size: 9px; opacity: 0.7; }
-      .form-multi-column-container { flex-direction: column; gap: 12px; }
       .gallery-wrapper { height: 50vh; }
     }
   </style>
@@ -121,14 +87,12 @@
 
   <input type="checkbox" id="toggle-details" class="css-toggle">
   <input type="checkbox" id="toggle-policies" class="css-toggle">
-  <input type="checkbox" id="toggle-checkout" class="css-toggle">
 
   <script>
     const CONFIG = {
       storeName: "JACK & ROSE",
       productName: "K1 TRAVEL STEAMER",
-      productPrice: "$65.00 USD", 
-      redirectSuccessUrl: "https://www.google.com"
+      productPrice: "$65.00 USD"
     };
   </script>
 
@@ -145,26 +109,21 @@
       <div class="main-image-display" id="js-gallery-container"></div>
 
       <div class="absolute top-1/2 -left-24 z-50 -translate-y-1/2 max-[1024px]:left-2">
-        <button type="button" class="cursor-pointer" id="js-prev-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" class="size-8 text-black" width="1em" height="1em" viewBox="0 0 24 24">
-            <g transform="rotate(-90 12 12)">
-              <path fill="currentColor" d="M11.29 8.71L6.7 13.3a.996.996 0 1 0 1.41 1.41L12 10.83l3.88 3.88a.996.996 0 1 0 1.41-1.41L12.7 8.71a.996.996 0 0 0-1.41 0"></path>
-            </g>
+        <button type="button" class="cursor-pointer text-black" id="js-prev-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" class="size-8" width="1em" height="1em" viewBox="0 0 24 24">
+            <g transform="rotate(-90 12 12)"><path fill="currentColor" d="M11.29 8.71L6.7 13.3a.996.996 0 1 0 1.41 1.41L12 10.83l3.88 3.88a.996.996 0 1 0 1.41-1.41L12.7 8.71a.996.996 0 0 0-1.41 0"></path></g>
           </svg>
         </button>
       </div>
 
       <div class="absolute top-1/2 -right-24 z-50 -translate-y-1/2 max-[1024px]:right-2">
-        <button type="button" class="cursor-pointer" id="js-next-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" class="size-8 text-black" width="1em" height="1em" viewBox="0 0 24 24">
-            <g transform="rotate(90 12 12)">
-              <path fill="currentColor" d="M11.29 8.71L6.7 13.3a.996.996 0 1 0 1.41 1.41L12 10.83l3.88 3.88a.996.996 0 1 0 1.41-1.41L12.7 8.71a.996.996 0 0 0-1.41 0"></path>
-            </g>
+        <button type="button" class="cursor-pointer text-black" id="js-next-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" class="size-8" width="1em" height="1em" viewBox="0 0 24 24">
+            <g transform="rotate(90 12 12)"><path fill="currentColor" d="M11.29 8.71L6.7 13.3a.996.996 0 1 0 1.41 1.41L12 10.83l3.88 3.88a.996.996 0 1 0 1.41-1.41L12.7 8.71a.996.996 0 0 0-1.41 0"></path></g>
           </svg>
         </button>
       </div>
     </div>
-    
     <div class="gallery-counter" id="js-gallery-counter"></div>
   </main>
 
@@ -180,7 +139,7 @@
         <input type="text" id="ui-qty-input" class="qty-input" value="1" readonly>
         <button type="button" class="qty-btn" id="qty-plus">+</button>
       </div>
-      <label for="toggle-checkout" class="btn-buy" id="open-modal-btn">Buy Now</label>
+      <button type="button" class="btn-buy" id="open-modal-btn">Buy Now</button>
     </div>
   </footer>
 
@@ -195,11 +154,11 @@
       </div>
       <div class="modal-text-block">
         <h4>Thermal Dynamics & Power Output</h4>
-        <p>1,000 Watts of localized power. Heats up in 15 seconds flat. Releases high-temperature, high-velocity steam reaching up to 248°F at an absolute delivery rate of 0.78 ounces per minute.</p>
+        <p>1,000 Watts of localized power. Heats up in 15 seconds flat. Releases high-temperature, high-velocity steam reaching up to 248°F.</p>
       </div>
       <div class="modal-text-block">
         <h4>Dual-Action Treatment Plate</h4>
-        <p>Integrated 10-square-inch Dry Ironing Heating Panel engineered to operate at a steady 302°F.</p>
+        <p>Integrated 10-square-inch Dry Ironing Heating Panel engineered to operate at a steady 302°F. Safely processes everything from rugged denim to fine luxury silk.</p>
       </div>
     </div>
   </div>
@@ -213,82 +172,19 @@
         <h4>Terms of Service</h4>
         <p>By entering and fulfilling an order allocation on this single terminal platform, you acknowledge and accept our unified service provisions.</p>
       </div>
-    </div>
-  </div>
-
-  <div class="yzy-overlay" id="modal-checkout">
-    <label for="toggle-checkout" class="overlay-bg-close"></label>
-    <div class="yzy-modal-body">
-      <label for="toggle-checkout" class="yzy-modal-close"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M2 2L14 14M2 14L14 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg></label>
-      
-      <div class="checkout-summary">
-        <span class="summary-item-name" id="modal-summary-name">ITEM ALLOCATION</span>
-        <span class="summary-item-breakdown" id="modal-summary-breakdown">0 x $0.00</span>
-        <div class="summary-total-line">
-          <span>Total Cost</span>
-          <span class="summary-total-price" id="modal-summary-total">$0.00</span>
-        </div>
+      <div class="modal-text-block">
+        <h4>Privacy & Dispatch Metrics</h4>
+        <p>Data transmission across this checkout engine is directly parsed for dispatch fulfillment logging metrics only. Long-tail records are never indexed.</p>
       </div>
-
-      <form id="discordForm" class="form-wrapper">
-        <input type="hidden" name="Ordered_Product" id="form-prod-name">
-        <input type="hidden" name="Quantity" id="form-prod-qty">
-        <input type="hidden" name="Price_Total" id="form-prod-price">
-        
-        <h3 class="modal-title" style="margin-top: 10px; margin-bottom: 12px;">Contact Information</h3>
-        <div class="form-wrapper" style="margin-bottom: 12px;">
-          <div class="form-input-container">
-            <label for="contact-email">EMAIL</label>
-            <input type="email" id="contact-email" name="Contact_Email" class="form-input" required autocomplete="email" placeholder="YOUR EMAIL">
-          </div>
-        </div>
-
-        <h3 class="modal-title" style="margin-top: 10px; margin-bottom: 12px;">Shipping Address</h3>
-        <div class="form-wrapper" style="margin-bottom: 0;">
-          <div class="form-multi-column-container">
-            <div class="form-input-container">
-              <label for="first-name">FIRST</label>
-              <input type="text" id="first-name" name="First_Name" class="form-input" required autocomplete="given-name" placeholder="FIRST NAME">
-            </div>
-            <div class="form-input-container">
-              <label for="last-name">LAST</label>
-              <input type="text" id="last-name" name="Last_Name" class="form-input" required autocomplete="family-name" placeholder="LAST NAME">
-            </div>
-          </div>
-          <div class="form-input-container">
-            <label for="address">STREET</label>
-            <input type="text" id="address" name="Shipping_Address" class="form-input" required autocomplete="shipping street-address" placeholder="STREET ADDRESS">
-          </div>
-          <div class="form-multi-column-container">
-            <div class="form-input-container">
-              <label for="city">CITY</label>
-              <input type="text" id="city" name="Shipping_City" class="form-input" required autocomplete="address-level2" placeholder="CITY">
-            </div>
-            <div class="form-input-container">
-              <label for="country">COUNTRY</label>
-              <select id="country" name="Shipping_Country" class="form-input" required autocomplete="country">
-                <option disabled selected value="">SELECT COUNTRY</option>
-                <option value="US">United States</option>
-                <option value="CA">Canada</option>
-                <option value="GB">United Kingdom</option>
-                <option value="AU">Australia</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <button type="submit" class="btn-submit-action" id="submitBtn">Complete Order Allocation</button>
-      </form>
     </div>
   </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // General Metadata Configurations Injection Loop
       document.title = CONFIG.storeName + " | " + CONFIG.productName;
       document.getElementById("ui-store-brand").innerText = CONFIG.storeName;
       document.getElementById("ui-product-title").innerText = CONFIG.productName;
       document.getElementById("ui-product-price").innerText = CONFIG.productPrice;
-      document.getElementById("modal-summary-name").innerText = CONFIG.productName;
 
       function calculateTotal(quantity) {
         var priceStr = CONFIG.productPrice;
@@ -310,25 +206,14 @@
       document.getElementById('qty-plus').addEventListener('click', function() { updateQty(1); });
 
       document.getElementById("open-modal-btn").addEventListener("click", function() {
-        var currentQty = document.getElementById("ui-qty-input").value;
-        var billingData = calculateTotal(currentQty);
-        document.getElementById("modal-summary-breakdown").innerText = currentQty + " x " + billingData.baseFormatted;
-        document.getElementById("modal-summary-total").innerText = billingData.totalFormatted;
-        
-        document.getElementById("form-prod-name").value = CONFIG.productName;
-        document.getElementById("form-prod-qty").value = currentQty;
-        document.getElementById("form-prod-price").value = billingData.totalFormatted;
-      });
-
-      document.getElementById("discordForm").addEventListener("submit", function (event) {
-        event.preventDefault();
-        var btn = document.getElementById("submitBtn");
-        btn.innerText = "PROCESSING DISPATCH...";
-        btn.disabled = true;
-
-        setTimeout(function() {
-          window.location.href = CONFIG.redirectSuccessUrl;
-        }, 800);
+        const currentQty = document.getElementById("ui-qty-input").value;
+        const billingData = calculateTotal(currentQty);
+        const targetParams = new URLSearchParams({
+          prod: CONFIG.productName,
+          qty: currentQty,
+          price: billingData.totalFormatted
+        });
+        window.location.href = "checkout.html?" + targetParams.toString();
       });
     });
   </script>
