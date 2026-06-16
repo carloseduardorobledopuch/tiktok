@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="lock.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Jack & Rose | K1 Travel Steamer</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="images.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    ::-webkit-scrollbar { display: none; }
+    html, body { 
+      font-family: 'IBM Plex Mono', monospace; 
+      font-variant-numeric: normal; 
+      font-feature-settings: 'zero' 0;
+      background: #ffffff; 
+      color: #000000; 
+      -webkit-font-smoothing: antialiased; 
+      margin: 0; padding: 0;
+      width: 100vw; height: 100dvh;
+      overflow: hidden; 
+      display: flex; flex-direction: column;
+      scrollbar-width: none;
+    }
+    * { box-sizing: border-box; font-family: inherit; letter-spacing: -0.04em; }
+    
+    .app-header { display: flex; justify-content: space-between; align-items: flex-start; padding: 24px; flex-shrink: 0; z-index: 10; }
+    .app-main { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; overflow: hidden; padding: 0 24px; }
+    .app-bottom-bar { display: flex; justify-content: space-between; align-items: center; padding: 24px; flex-shrink: 0; z-index: 10; }
+    
+    .logo { font-size: 14px; font-weight: 700; text-decoration: none; color: #000; letter-spacing: 0.15em; text-transform: uppercase; }
+    .product-title { font-size: 24px; font-weight: 700; line-height: 1; text-transform: uppercase; text-align: right; }
+    .product-price { font-size: 14px; font-weight: 500; text-align: right; margin-top: 4px; }
+
+    .bottom-left { display: flex; gap: 24px; flex: 1; align-items: center; }
+    .ui-link { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #888; cursor: pointer; transition: color 0.2s; white-space: nowrap; }
+    .ui-link:hover { color: #000; }
+    .bottom-center { flex: 1; text-align: center; font-size: 10px; font-weight: 700; color: #888; letter-spacing: 0.15em; text-transform: uppercase; user-select: none; }
+    .bottom-right { display: flex; gap: 12px; flex: 1; justify-content: flex-end; align-items: center; }
+    
+    .qty-container { display: flex; align-items: center; border: 1px solid #000; height: 50px; background: #fff; }
+    .qty-btn { width: 40px; height: 100%; background: none; border: none; font-size: 18px; cursor: pointer; color: #000; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+    .qty-btn:active { background: #eee; }
+    .qty-input { width: 40px; height: 100%; border: none; border-left: 1px solid #000; border-right: 1px solid #000; text-align: center; font-size: 14px; font-weight: 700; color: #000; background: transparent; pointer-events: none; outline: none; padding: 0; }
+    
+    .btn-buy { display: flex; align-items: center; justify-content: center; height: 50px; background: #000; color: #fff; padding: 0 30px; font-size: 13px; font-weight: 700; text-transform: uppercase; border: 1px solid #000; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; }
+    .btn-buy:hover { background: #fff; color: #000; }
+    .btn-buy:active { transform: scale(0.98); }
+    
+    .gallery-wrapper { width: 100%; max-width: 500px; height: 60vh; position: relative; display: flex; justify-content: center; align-items: center; }
+    .main-image-display { width: 100%; height: 100%; position: relative; }
+    .gallery-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; transition: opacity 0.2s ease; pointer-events: none; }
+    .gallery-img.active { opacity: 1; pointer-events: auto; }
+    .gallery-counter { font-size: 11px; letter-spacing: 0.1em; color: #888; font-weight: 700; margin-top: 16px; user-select: none; }
+    
+    .css-toggle { display: none; }
+    .yzy-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; background: rgba(0,0,0,0.6); z-index: 9999; display: flex; justify-content: center; align-items: center; padding: 20px; opacity: 0; transition: opacity 0.25s ease; backdrop-filter: blur(2px); pointer-events: none; }
+    .yzy-modal-body { background: #ffffff; width: 100%; max-width: 640px; max-height: 90dvh; overflow-y: auto; padding: 50px 30px 35px; border: 1px solid #000; position: relative; transform: scale(0.97); transition: transform 0.25s ease; text-align: left; }
+    
+    /* Dedicated Iframe Modal Body Optimization */
+    .yzy-modal-body-checkout { background: #ffffff; width: 100%; max-width: 640px; height: 85dvh; max-height: 750px; border: 1px solid #000; position: relative; transform: scale(0.97); transition: transform 0.25s ease; overflow: hidden; }
+    
+    .yzy-modal-close { position: absolute; top: 0; right: 0; width: 50px; height: 50px; background: transparent; border: none; cursor: pointer; z-index: 50; color: #000; display: flex; justify-content: center; align-items: center; transition: opacity 0.2s ease; }
+    .yzy-modal-close:hover { opacity: 0.4; }
+    .overlay-bg-close { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+    
+    .modal-title { font-size: 14px; font-weight: 700; text-transform: uppercase; margin-bottom: 24px; border-bottom: 1px solid #000; padding-bottom: 8px; }
+    .modal-text-block { font-size: 13px; color: #444; line-height: 1.5; margin-bottom: 20px; }
+    .modal-text-block h4 { color: #000; font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+    
+    #toggle-details:checked ~ #modal-details,
+    #toggle-policies:checked ~ #modal-policies,
+    #toggle-checkout:checked ~ #modal-checkout { opacity: 1; pointer-events: auto; }
+    
+    #toggle-details:checked ~ #modal-details .yzy-modal-body,
+    #toggle-policies:checked ~ #modal-policies .yzy-modal-body,
+    #toggle-checkout:checked ~ #modal-checkout .yzy-modal-body-checkout { transform: scale(1); }
+    
+    @media (max-width: 768px) {
+      .app-header { padding: 16px; align-items: center; }
+      .product-title { font-size: 18px; text-align: right; }
+      .app-bottom-bar { flex-direction: column; gap: 20px; padding: 16px; align-items: stretch; }
+      .bottom-left { justify-content: space-between; order: 1; }
+      .bottom-right { justify-content: space-between; order: 2; width: 100%; }
+      .btn-buy { flex-grow: 1; margin-left: 12px; padding: 0; }
+      .bottom-center { order: 3; padding-top: 6px; font-size: 9px; opacity: 0.7; }
+      .gallery-wrapper { height: 50vh; }
+      .yzy-modal-body-checkout { height: 95dvh; max-height: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <input type="checkbox" id="toggle-details" class="css-toggle">
+  <input type="checkbox" id="toggle-policies" class="css-toggle">
+  <input type="checkbox" id="toggle-checkout" class="css-toggle">
+
+  <script>
+    const CONFIG = {
+      storeName: "JACK & ROSE",
+      productName: "K1 TRAVEL STEAMER",
+      productPrice: "$65.00 USD"
+    };
+  </script>
+
+  <header class="app-header">
+    <a class="logo" href="#" id="ui-store-brand">STORE</a>
+    <div>
+      <h1 class="product-title" id="ui-product-title">PRODUCT</h1>
+      <div class="product-price" id="ui-product-price">$0.00</div>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <div class="gallery-wrapper">
+      <div class="main-image-display" id="js-gallery-container"></div>
+
+      <!-- Navigation System -->
+      <div class="absolute top-1/2 -left-24 z-50 -translate-y-1/2 max-[1024px]:left-2">
+        <button type="button" class="cursor-pointer text-black" id="js-prev-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" class="size-8" width="1em" height="1em" viewBox="0 0 24 24">
+            <g transform="rotate(-90 12 12)"><path fill="currentColor" d="M11.29 8.71L6.7 13.3a.996.996 0 1 0 1.41 1.41L12 10.83l3.88 3.88a.996.996 0 1 0 1.41-1.41L12.7 8.71a.996.996 0 0 0-1.41 0"></path></g>
+          </svg>
+        </button>
+      </div>
+
+      <div class="absolute top-1/2 -right-24 z-50 -translate-y-1/2 max-[1024px]:right-2">
+        <button type="button" class="cursor-pointer text-black" id="js-next-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" class="size-8" width="1em" height="1em" viewBox="0 0 24 24">
+            <g transform="rotate(90 12 12)"><path fill="currentColor" d="M11.29 8.71L6.7 13.3a.996.996 0 1 0 1.41 1.41L12 10.83l3.88 3.88a.996.996 0 1 0 1.41-1.41L12.7 8.71a.996.996 0 0 0-1.41 0"></path></g>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="gallery-counter" id="js-gallery-counter"></div>
+  </main>
+
+  <footer class="app-bottom-bar">
+    <div class="bottom-left">
+      <label for="toggle-details" class="ui-link">+ Details</label>
+      <label for="toggle-policies" class="ui-link">+ Policies</label>
+    </div>
+    <div class="bottom-center">© 2026 JACK & ROSE</div>
+    <div class="bottom-right">
+      <div class="qty-container">
+        <button type="button" class="qty-btn" id="qty-minus">−</button>
+        <input type="text" id="ui-qty-input" class="qty-input" value="1" readonly>
+        <button type="button" class="qty-btn" id="qty-plus">+</button>
+      </div>
+      <!-- Modal Opening Label Hook -->
+      <label for="toggle-checkout" class="btn-buy" id="open-modal-btn">Buy Now</label>
+    </div>
+  </footer>
+
+  <!-- Details Modal -->
+  <div class="yzy-overlay" id="modal-details">
+    <label for="toggle-details" class="overlay-bg-close"></label>
+    <div class="yzy-modal-body">
+      <label for="toggle-details" class="yzy-modal-close"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M2 2L14 14M2 14L14 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg></label>
+      <h2 class="modal-title">Product Specifications</h2>
+      <div class="modal-text-block">
+        <h4>Global Voltage Architecture</h4>
+        <p>Pioneered 100V-220V wide voltage technology. Fully automatic adaptation layer—plug and play worldwide without external voltage conversion hardware.</p>
+      </div>
+      <div class="modal-text-block">
+        <h4>Thermal Dynamics & Power Output</h4>
+        <p>1,000 Watts of localized power. Heats up in 15 seconds flat. Releases high-temperature, high-velocity steam reaching up to 248°F.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Policies Modal -->
+  <div class="yzy-overlay" id="modal-policies">
+    <label for="toggle-policies" class="overlay-bg-close"></label>
+    <div class="yzy-modal-body">
+      <label for="toggle-policies" class="yzy-modal-close"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M2 2L14 14M2 14L14 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg></label>
+      <h2 class="modal-title">Legal & Policies</h2>
+      <div class="modal-text-block">
+        <h4>Terms of Service</h4>
+        <p>By entering and fulfilling an order allocation on this single terminal platform, you acknowledge and accept our unified service provisions.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Iframe Checkout Modal Interface Layer -->
+  <div class="yzy-overlay" id="modal-checkout">
+    <label for="toggle-checkout" class="overlay-bg-close"></label>
+    <div class="yzy-modal-body-checkout">
+      <label for="toggle-checkout" class="yzy-modal-close"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M2 2L14 14M2 14L14 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg></label>
+      <!-- Sandboxed Frame Pipeline Target -->
+      <iframe src="about:blank" id="js-checkout-iframe" class="w-full h-full border-none"></iframe>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.title = CONFIG.storeName + " | " + CONFIG.productName;
+      document.getElementById("ui-store-brand").innerText = CONFIG.storeName;
+      document.getElementById("ui-product-title").innerText = CONFIG.productName;
+      document.getElementById("ui-product-price").innerText = CONFIG.productPrice;
+
+      function calculateTotal(quantity) {
+        var priceStr = CONFIG.productPrice;
+        var basePrice = parseFloat(priceStr.replace(/[^0-9.]/g, '')) || 0;
+        var totalCost = basePrice * parseInt(quantity);
+        var suffixStr = (priceStr.match(/[A-Za-z ]+$/) || [""])[0];
+        var prefixStr = (priceStr.match(/^[^0-9.]+/) || [""])[0];
+        return { totalFormatted: prefixStr + totalCost.toFixed(2) + suffixStr, baseFormatted: priceStr };
+      }
+
+      function updateQty(change) {
+        const input = document.getElementById("ui-qty-input");
+        let current = parseInt(input.value) || 1;
+        current += change;
+        if (current < 1) current = 1;
+        input.value = current;
+      }
+      document.getElementById('qty-minus').addEventListener('click', function() { updateQty(-1); });
+      document.getElementById('qty-plus').addEventListener('click', function() { updateQty(1); });
+
+      // Update and pass data directly to the iframe source upon modal toggle click
+      document.getElementById("open-modal-btn").addEventListener("click", function() {
+        const currentQty = document.getElementById("ui-qty-input").value;
+        const billingData = calculateTotal(currentQty);
+        
+        const targetParams = new URLSearchParams({
+          prod: CONFIG.productName,
+          qty: currentQty,
+          price: billingData.totalFormatted
+        });
+        
+        // Update iframe location source dynamically with parameters list
+        document.getElementById("js-checkout-iframe").src = "checkout.html?" + targetParams.toString();
+      });
+    });
+  </script>
+</body>
+</html>
