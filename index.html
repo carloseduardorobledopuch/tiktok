@@ -105,7 +105,13 @@
       .btn-buy { flex-grow: 1; margin-left: 12px; padding: 0; }
       .bottom-center { order: 3; padding-top: 6px; font-size: 9px; opacity: 0.7; }
       .gallery-wrapper { height: 50vh; }
-      .yzy-modal-body-checkout { height: 95dvh; max-height: none; }
+      
+      /* Pushes iframe viewport down cleanly on mobile so the minimal X button never overruns content */
+      .yzy-modal-body-checkout { 
+        height: 95dvh; 
+        max-height: none; 
+        padding-top: 60px; 
+      }
       
       .yzy-modal-close {
         top: 12px;
