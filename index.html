@@ -60,7 +60,6 @@
     .yzy-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; background: rgba(0,0,0,0.6); z-index: 9999; display: flex; justify-content: center; align-items: center; padding: 20px; opacity: 0; transition: opacity 0.25s ease; backdrop-filter: blur(2px); pointer-events: none; }
     .yzy-modal-body { background: #ffffff; width: 100%; max-width: 640px; max-height: 90dvh; overflow-y: auto; padding: 50px 30px 35px; border: 1px solid #000; position: relative; transform: scale(0.97); transition: transform 0.25s ease; text-align: left; }
     
-    /* Dedicated Iframe Modal Body Optimization */
     .yzy-modal-body-checkout { background: #ffffff; width: 100%; max-width: 640px; height: 85dvh; max-height: 750px; border: 1px solid #000; position: relative; transform: scale(0.97); transition: transform 0.25s ease; overflow: hidden; }
     
     .yzy-modal-close { position: absolute; top: 0; right: 0; width: 50px; height: 50px; background: transparent; border: none; cursor: pointer; z-index: 50; color: #000; display: flex; justify-content: center; align-items: center; transition: opacity 0.2s ease; }
@@ -102,7 +101,7 @@
     const CONFIG = {
       storeName: "JACK & ROSE DEPOT",
       productName: "K1 TRAVEL STEAMER",
-      productPrice: "MAD 562.94"
+      productPrice: "$39.00 USD"
     };
   </script>
 
@@ -110,7 +109,7 @@
     <a class="logo" href="#" id="ui-store-brand">STORE</a>
     <div>
       <h1 class="product-title" id="ui-product-title">PRODUCT</h1>
-      <div class="product-price" id="ui-product-price">MAD 0.00</div>
+      <div class="product-price" id="ui-product-price">$0.00</div>
     </div>
   </header>
 
@@ -220,7 +219,7 @@
         var totalCost = basePrice * parseInt(quantity);
         var suffixStr = (priceStr.match(/[A-Za-z ]+$/) || [""])[0];
         var prefixStr = (priceStr.match(/^[^0-9.]+/) || [""])[0];
-        return { totalFormatted: prefixStr + " " + totalCost.toFixed(2), baseFormatted: priceStr };
+        return { totalFormatted: prefixStr + totalCost.toFixed(2) + " " + suffixStr, baseFormatted: priceStr };
       }
 
       function updateQty(change) {
@@ -241,7 +240,7 @@
         const targetParams = new URLSearchParams({
           prod: CONFIG.productName,
           qty: currentQty,
-          price: billingData.totalFormatted
+          price: billingData.totalFormatted.trim()
         });
         
         // Update iframe location source dynamically with parameters list
