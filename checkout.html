@@ -16,6 +16,8 @@
       color: #000000; 
       -webkit-font-smoothing: antialiased; 
       letter-spacing: -0.04em;
+      margin: 0;
+      padding: 0;
     }
     .form-input { 
       width: 100%; 
@@ -43,17 +45,31 @@
       transition: all 0.2s ease;
     }
     .btn-submit-action:hover { background: #fff; color: #000; }
+
+    /* STICKY HEADER MATRIX: Keeps the top allocation display completely unscrollable */
+    .sticky-summary-hdr {
+      position: sticky;
+      top: 0;
+      background: #ffffff;
+      z-index: 50;
+      padding-top: max(16px, env(safe-area-inset-top));
+      padding-bottom: 12px;
+      margin-bottom: 24px;
+    }
   </style>
 </head>
-<body class="min-h-screen flex items-center justify-center">
+<body class="min-h-screen flex justify-center items-start">
 
-  <div class="w-full max-w-xl p-8 md:p-10 bg-white">
-    <div class="border border-black p-6 mb-8 text-center bg-zinc-50">
-      <span class="text-sm font-bold block uppercase tracking-wider mb-1" id="ui-summary-name">LOADING ALLOCATION...</span>
-      <span class="text-xs text-zinc-500 block mb-3" id="ui-summary-breakdown">—</span>
-      <div class="border-t border-black pt-3 flex justify-between items-center text-sm font-bold uppercase">
-        <span>Total Cost</span>
-        <span id="ui-summary-total">$0.00</span>
+  <div class="w-full max-w-xl px-4 pb-12">
+    
+    <div class="sticky-summary-hdr">
+      <div class="border border-black p-6 text-center bg-zinc-50">
+        <span class="text-sm font-bold block uppercase tracking-wider mb-1" id="ui-summary-name">LOADING ALLOCATION...</span>
+        <span class="text-xs text-zinc-500 block mb-3" id="ui-summary-breakdown">—</span>
+        <div class="border-t border-black pt-3 flex justify-between items-center text-sm font-bold uppercase">
+          <span>Total Cost</span>
+          <span id="ui-summary-total">$0.00</span>
+        </div>
       </div>
     </div>
 
@@ -134,7 +150,6 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // 1. Parse URL parameters and update summary UI elements
       const urlParams = new URLSearchParams(window.location.search);
       const prodName = urlParams.get('prod') || "PRODUCT ALLOCATION";
       const prodQty = urlParams.get('qty') || "1";
@@ -150,14 +165,11 @@
       document.getElementById("ui-summary-breakdown").innerText = `${prodQty} x ${baseFormatted}`;
       document.getElementById("ui-summary-total").innerText = prodPrice;
 
-      // 2. Set values for hidden form inputs
       document.getElementById("form-prod-name").value = prodName;
       document.getElementById("form-prod-qty").value = prodQty;
       document.getElementById("form-prod-price").value = prodPrice;
 
-      // 3. Payment Inputs Formatting & Standards Validation Logic
-
-      // Card Number Formatter (Blocks letters, groups by 4 spaces)
+      // Card Number Formatter
       const cardInput = document.getElementById("cc-number");
       cardInput.addEventListener("input", function (e) {
         let value = e.target.value.replace(/\D/g, "");
@@ -165,17 +177,15 @@
         e.target.value = matches ? matches.join(" ") : "";
       });
 
-      // Expiry Date Formatter (MM / YY) + Max 12 Month Validation
+      // Expiry Date Formatter
       const expiryInput = document.getElementById("cc-exp");
       expiryInput.addEventListener("input", function (e) {
         let value = e.target.value.replace(/\D/g, "");
         
-        // If first digit typed is 2-9, instantly turn it into 02-09
         if (value.length === 1 && value > "1") {
           value = "0" + value;
         }
         
-        // Ensure month calculation doesn't pass 12 or submit 00
         if (value.length >= 2) {
           let month = parseInt(value.substring(0, 2), 10);
           if (month > 12) {
@@ -185,7 +195,6 @@
           }
         }
 
-        // Apply spatial formatting
         if (value.length > 2) {
           e.target.value = value.substring(0, 2) + " / " + value.substring(2, 4);
         } else {
@@ -193,7 +202,6 @@
         }
       });
 
-      // Cleans up deleting the space/slash characters cleanly
       expiryInput.addEventListener("keydown", function (e) {
         if (e.key === "Backspace" && (e.target.value.endsWith(" ") || e.target.value.endsWith("/"))) {
           e.preventDefault();
@@ -202,14 +210,13 @@
         }
       });
 
-      // CVC Formatter (Numbers only restrictions)
+      // CVC Input restriction
       const cvcInput = document.getElementById("cc-csc");
       cvcInput.addEventListener("input", function (e) {
         e.target.value = e.target.value.replace(/\D/g, "");
       });
 
-
-      // 4. Form Submission Logic
+      // Form Submission Logic
       document.getElementById("checkoutForm").addEventListener("submit", function (event) { 
         event.preventDefault(); 
 
