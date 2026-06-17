@@ -46,13 +46,14 @@
     }
     .btn-submit-action:hover { background: #fff; color: #000; }
 
-    /* STICKY HEADER MATRIX: Keeps the top allocation display completely unscrollable */
+    /* STICKY HEADER MATRIX: Keeps top allocation display static with generous head margins */
     .sticky-summary-hdr {
       position: sticky;
       top: 0;
       background: #ffffff;
       z-index: 50;
-      padding-top: max(16px, env(safe-area-inset-top));
+      /* Combines explicit 40px spacing with device notches / safe zones dynamically */
+      padding-top: calc(40px + env(safe-area-inset-top));
       padding-bottom: 12px;
       margin-bottom: 24px;
     }
