@@ -100,9 +100,9 @@
 
   <script>
     const CONFIG = {
-      storeName: "JACK & ROSE",
+      storeName: "JACK & ROSE DEPOT",
       productName: "K1 TRAVEL STEAMER",
-      productPrice: "$23.00 USD"
+      productPrice: "MAD 562.94"
     };
   </script>
 
@@ -110,7 +110,7 @@
     <a class="logo" href="#" id="ui-store-brand">STORE</a>
     <div>
       <h1 class="product-title" id="ui-product-title">PRODUCT</h1>
-      <div class="product-price" id="ui-product-price">$0.00</div>
+      <div class="product-price" id="ui-product-price">MAD 0.00</div>
     </div>
   </header>
 
@@ -143,7 +143,7 @@
       <label for="toggle-details" class="ui-link">+ Details</label>
       <label for="toggle-policies" class="ui-link">+ Policies</label>
     </div>
-    <div class="bottom-center">© 2026 JACK & ROSE</div>
+    <div class="bottom-center">© 2026 JACK & ROSE DEPOT</div>
     <div class="bottom-right">
       <div class="qty-container">
         <button type="button" class="qty-btn" id="qty-minus">−</button>
@@ -162,12 +162,16 @@
       <label for="toggle-details" class="yzy-modal-close"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M2 2L14 14M2 14L14 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg></label>
       <h2 class="modal-title">Product Specifications</h2>
       <div class="modal-text-block">
-        <h4>Global Voltage Architecture</h4>
-        <p>Pioneered 100V-220V wide voltage technology. Fully automatic adaptation layer—plug and play worldwide without external voltage conversion hardware.</p>
+        <h4>100V-220V Global Voltage Architecture</h4>
+        <p>Jack & Rose pioneered 100V-220V wide voltage technology. Features a fully automatic adaptation layer—plug and play anywhere abroad without the need for external voltage conversion hardware.</p>
       </div>
       <div class="modal-text-block">
-        <h4>Thermal Dynamics & Power Output</h4>
-        <p>1,000 Watts of localized power. Heats up in 15 seconds flat. Releases high-temperature, high-velocity steam reaching up to 248°F.</p>
+        <h4>High Temperature & Velocity Steam Matrix</h4>
+        <p>Engineered with 1,000 Watts of localized power heating up in 15 seconds flat. Releases high-temperature, high-velocity steam reaching up to 248°F combined with a 10-square-inch dry ironing ceramic heating panel.</p>
+      </div>
+      <div class="modal-text-block">
+        <h4>Travel Size Form Factor</h4>
+        <p>Compact, minimalist design measuring 10.23 x 3.9 inches and weighing only 1.6 lbs (equivalent to a 750ml mineral water bottle). Features a rotating head system to maximize travel packing spaces.</p>
       </div>
     </div>
   </div>
@@ -180,7 +184,15 @@
       <h2 class="modal-title">Legal & Policies</h2>
       <div class="modal-text-block">
         <h4>Terms of Service</h4>
-        <p>By entering and fulfilling an order allocation on this single terminal platform, you acknowledge and accept our unified service provisions.</p>
+        <p>By entering and fulfilling an order allocation on this single terminal platform, you acknowledge and accept our verified secure dispatch arrangements.</p>
+      </div>
+      <div class="modal-text-block">
+        <h4>FREE 30-Day Returns & Replacement</h4>
+        <p>All items undergo strict structural processing checkmarks. If your item arrives flawed, we fully guarantee a free replacement or complete reimbursement window for up to 30 days.</p>
+      </div>
+      <div class="modal-text-block">
+        <h4>Logistics & Secure Handling</h4>
+        <p>Orders are packaged safely in premium protection cases. Registered shipping lines populate live tracking codes directly to your destination metrics upon allocation approval.</p>
       </div>
     </div>
   </div>
@@ -208,7 +220,7 @@
         var totalCost = basePrice * parseInt(quantity);
         var suffixStr = (priceStr.match(/[A-Za-z ]+$/) || [""])[0];
         var prefixStr = (priceStr.match(/^[^0-9.]+/) || [""])[0];
-        return { totalFormatted: prefixStr + totalCost.toFixed(2) + suffixStr, baseFormatted: priceStr };
+        return { totalFormatted: prefixStr + " " + totalCost.toFixed(2), baseFormatted: priceStr };
       }
 
       function updateQty(change) {
