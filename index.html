@@ -4,7 +4,7 @@
   <script src="lock.js" defer></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Jack & Rose Depot | K1 Travel Steamer</title>
+  <title>ANRABESS STORE | Women Athletic Dress</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <script src="images.js" defer></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +13,14 @@
   <link rel="icon" type="image/png" href="https://yeezy.com/favicon.png">
   <style>
     ::-webkit-scrollbar { display: none; }
-    html, body { 
+    html {
+      margin: 0; padding: 0;
+      width: 100vw;
+      overflow-x: hidden;
+      overflow-y: auto;
+      scrollbar-width: none;
+    }
+    body { 
       font-family: 'IBM Plex Mono', monospace; 
       font-variant-numeric: normal; 
       font-feature-settings: 'zero' 0;
@@ -21,210 +28,453 @@
       color: #000000; 
       -webkit-font-smoothing: antialiased; 
       margin: 0; padding: 0;
-      width: 100vw; height: 100dvh;
-      overflow: hidden; 
-      display: flex; flex-direction: column;
-      scrollbar-width: none;
+      width: 100vw;
+      min-height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
     * { box-sizing: border-box; font-family: inherit; letter-spacing: -0.04em; }
     
-    .app-header { display: flex; justify-content: space-between; align-items: flex-start; padding: 24px; flex-shrink: 0; z-index: 10; }
-    .app-main { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; overflow: hidden; padding: 0 24px; }
-    .app-bottom-bar { display: flex; justify-content: space-between; align-items: center; padding: 24px; flex-shrink: 0; z-index: 10; }
-    
+    .app-header { display: flex; justify-content: space-between; align-items: flex-start; padding: 24px; z-index: 10; border-bottom: 1px solid #f2f2f2; background: #fff; }
     .logo { font-size: 14px; font-weight: 700; text-decoration: none; color: #000; letter-spacing: 0.15em; text-transform: uppercase; }
-    .product-title { font-size: 24px; font-weight: 700; line-height: 1; text-transform: uppercase; text-align: right; }
-    .product-price { font-size: 14px; font-weight: 500; text-align: right; margin-top: 4px; }
+    .product-title { font-size: 20px; font-weight: 700; line-height: 1.1; text-transform: uppercase; text-align: right; max-width: 300px; }
+    .product-price { font-size: 15px; font-weight: 700; text-align: right; margin-top: 6px; color: #000; }
 
-    .bottom-left { display: flex; gap: 24px; flex: 1; align-items: center; }
-    .ui-link { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #888; cursor: pointer; transition: color 0.2s; white-space: nowrap; }
-    .ui-link:hover { color: #000; }
-    .bottom-center { flex: 1; text-align: center; font-size: 10px; font-weight: 700; color: #888; letter-spacing: 0.15em; text-transform: uppercase; user-select: none; }
-    .bottom-right { display: flex; gap: 12px; flex: 1; justify-content: flex-end; align-items: center; }
-    
-    .qty-container { display: flex; align-items: center; border: 1px solid #000; height: 50px; background: #fff; }
-    .qty-btn { width: 40px; height: 100%; background: none; border: none; font-size: 18px; cursor: pointer; color: #000; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
-    .qty-btn:active { background: #eee; }
-    .qty-input { width: 40px; height: 100%; border: none; border-left: 1px solid #000; border-right: 1px solid #000; text-align: center; font-size: 14px; font-weight: 700; color: #000; background: transparent; pointer-events: none; outline: none; padding: 0; }
-    
-    .btn-buy { display: flex; align-items: center; justify-content: center; height: 50px; background: #000; color: #fff; padding: 0 30px; font-size: 13px; font-weight: 700; text-transform: uppercase; border: 1px solid #000; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; }
-    .btn-buy:hover { background: #fff; color: #000; }
-    .btn-buy:active { transform: scale(0.98); }
-    
-    .gallery-wrapper { width: 100%; max-width: 500px; height: 60vh; position: relative; display: flex; justify-content: center; align-items: center; }
-    .main-image-display { width: 100%; height: 100%; position: relative; }
+    /* Main Grid Split Engine */
+    .main-workspace { display: grid; grid-template-columns: 1fr 420px; width: 100%; max-width: 1600px; margin: 0 auto; }
+    .gallery-column { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 40px; border-right: 1px solid #f2f2f2; position: relative; }
+    .interface-column { padding: 40px; display: flex; flex-direction: column; justify-content: flex-start; gap: 24px; background: #fafafa; min-width: 0; }
+
+    .gallery-wrapper { width: 100%; max-width: 480px; height: 50vh; position: relative; display: flex; justify-content: center; align-items: center; }
     .gallery-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; transition: opacity 0.2s ease; pointer-events: none; }
     .gallery-img.active { opacity: 1; pointer-events: auto; }
-    .gallery-counter { font-size: 11px; letter-spacing: 0.1em; color: #888; font-weight: 700; margin-top: 16px; user-select: none; }
     
+    /* Variable Section Layouts */
+    .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #000; margin-bottom: 8px; display: flex; justify-content: space-between; }
+    .section-label span { color: #888; }
+    
+    /* COMPACT COLOR DOTS - Replaced bulky squares with elegant dots */
+    .color-swatch-flex { display: flex; flex-wrap: wrap; gap: 10px; width: 100%; }
+    .color-variant-node { display: block; position: relative; cursor: pointer; }
+    .color-variant-node.hidden-row { display: none; }
+    
+    .color-swatch-circle { display: block; width: 32px; height: 32px; border-radius: 50%; border: 1px solid #e5e5e5; position: relative; transition: all 0.15s ease; background: #fff; }
+    .color-swatch-circle:hover { border-color: #000; transform: scale(1.05); }
+    .variant-input:checked + .color-swatch-circle { border-color: #000; box-shadow: 0 0 0 2px #000; }
+    
+    .color-preview-inner { position: absolute; inset: 3px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.05); }
+
+    /* Ultra Compact Sizing Layout */
+    .chip-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
+    .selector-chip { display: flex; align-items: center; justify-content: center; border: 1px solid #e5e5e5; height: 36px; font-size: 11px; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: all 0.15s ease; background: #fff; text-align: center; }
+    .selector-chip:hover { border-color: #000; }
+    .variant-input:checked + .selector-chip { background: #000; color: #fff; border-color: #000; }
+
+    /* Show More Text Link */
+    .btn-more-colors { font-size: 10px; font-weight: 700; text-transform: uppercase; text-decoration: underline; color: #666; cursor: pointer; display: inline-block; margin-top: 10px; }
+    .btn-more-colors:hover { color: #000; }
+
+    /* Compact Main Interface Counters */
+    .qty-container { display: flex; align-items: center; border: 1px solid #000; height: 42px; background: #fff; width: 105px; }
+    .qty-btn { width: 32px; height: 100%; background: none; border: none; font-size: 14px; cursor: pointer; color: #000; display: flex; align-items: center; justify-content: center; }
+    .qty-btn:active { background: #f2f2f2; }
+    .qty-input { width: 41px; height: 100%; border: none; border-left: 1px solid #000; border-right: 1px solid #000; text-align: center; font-size: 13px; font-weight: 700; background: transparent; pointer-events: none; }
+    
+    /* Cart Specific Mini Quantity Counter */
+    .cart-qty-container { display: flex; align-items: center; border: 1px solid #000; height: 32px; background: #fff; width: 90px; margin-top: 6px; }
+    .cart-qty-btn { width: 28px; height: 100%; background: none; border: none; font-size: 12px; cursor: pointer; color: #000; display: flex; align-items: center; justify-content: center; }
+    .cart-qty-input { width: 34px; height: 100%; border: none; border-left: 1px solid #000; border-right: 1px solid #000; text-align: center; font-size: 11px; font-weight: 700; background: transparent; pointer-events: none; }
+
+    /* COMPACT TRANSACTION TRIGGERS - Streamlined Heights & Padding */
+    .btn-buy { display: flex; align-items: center; justify-content: center; height: 42px; background: #000; color: #fff; flex-grow: 1; font-size: 12px; font-weight: 700; text-transform: uppercase; border: 1px solid #000; cursor: pointer; transition: all 0.2s ease; user-select: none; text-decoration: none; }
+    .btn-buy:hover { background: #fff; color: #000; }
+    .btn-buy:active { transform: scale(0.99); }
+
+    .btn-secondary { display: flex; align-items: center; justify-content: center; height: 42px; background: #fff; color: #000; flex-grow: 1; font-size: 12px; font-weight: 700; text-transform: uppercase; border: 1px solid #000; cursor: pointer; transition: all 0.2s ease; }
+    .btn-secondary:hover { background: #000; color: #fff; }
+    
+    .app-bottom-bar { display: flex; justify-content: space-between; align-items: center; padding: 24px; border-top: 1px solid #f2f2f2; background: #fff; }
+    .bottom-links { display: flex; align-items: center; border: 1px solid #000; padding: 8px 16px; background: #fafafa; }
+    .link-divider { margin: 0 12px; color: #ddd; font-weight: 400; }
+    .ui-link { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #000; cursor: pointer; }
+    .ui-link:hover { opacity: 0.6; }
+
+    .spec-table { width: 100%; border-collapse: collapse; font-size: 10px; margin-top: 8px; }
+    .spec-table th { text-align: left; font-weight: 700; text-transform: uppercase; border-bottom: 1px solid #000; padding: 6px 2px; }
+    .spec-table td { padding: 6px 2px; border-bottom: 1px solid #eee; color: #444; }
+
     .css-toggle { display: none; }
     .yzy-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; background: rgba(0,0,0,0.6); z-index: 9999; display: flex; justify-content: center; align-items: center; padding: 20px; opacity: 0; transition: opacity 0.25s ease; backdrop-filter: blur(2px); pointer-events: none; }
-    .yzy-modal-body { background: #ffffff; width: 100%; max-width: 640px; max-height: 90dvh; overflow-y: auto; padding: 50px 30px 35px; border: 1px solid #000; position: relative; transform: scale(0.97); transition: transform 0.25s ease; text-align: left; }
+    .yzy-modal-body { background: #ffffff; width: 100%; max-width: 600px; max-height: 85dvh; overflow-y: auto; padding: 40px 30px; border: 1px solid #000; position: relative; transform: scale(0.97); transition: transform 0.25s ease; }
     
     .yzy-modal-body-checkout { background: #ffffff; width: 100%; max-width: 640px; height: 85dvh; max-height: 750px; border: 1px solid #000; position: relative; transform: scale(0.97); transition: transform 0.25s ease; overflow: hidden; }
-    
-    /* MODAL CLOSE SYSTEM: Background and border stripped clean */
-    .yzy-modal-close { 
-      position: fixed; 
-      top: 16px; 
-      right: 16px; 
-      width: 44px; 
-      height: 44px; 
-      background: transparent; 
-      border: none; 
-      cursor: pointer; 
-      z-index: 99999; 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      transition: opacity 0.2s ease; 
-      color: #000000;
-    }
+    .yzy-modal-close { position: fixed; top: 16px; right: 16px; width: 44px; height: 44px; background: transparent; border: none; cursor: pointer; z-index: 99999; display: flex; justify-content: center; align-items: center; color: #000; }
     .yzy-modal-close:hover { opacity: 0.5; }
-    
     .overlay-bg-close { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+    /* Cart Drawer Interface layout */
+    .cart-drawer-overlay { position: fixed; top: 0; right: 0; width: 100vw; height: 100dvh; background: rgba(0,0,0,0.4); z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; backdrop-filter: blur(2px); }
+    .cart-drawer-body { position: absolute; top: 0; right: 0; width: 100%; max-width: 440px; height: 100%; background: #ffffff; border-left: 1px solid #000; transform: translateX(100%); transition: transform 0.3s ease; display: flex; flex-direction: column; }
     
-    .modal-title { font-size: 14px; font-weight: 700; text-transform: uppercase; margin-bottom: 24px; border-bottom: 1px solid #000; padding-bottom: 8px; }
-    .modal-text-block { font-size: 13px; color: #444; line-height: 1.5; margin-bottom: 20px; }
-    .modal-text-block h4 { color: #000; font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+    #toggle-cart:checked ~ .cart-drawer-overlay { opacity: 1; pointer-events: auto; }
+    #toggle-cart:checked ~ .cart-drawer-overlay .cart-drawer-body { transform: translateX(0); }
+
+    /* Sticky Mobile Interface Configuration Tray - Re-designed Slimmer Height Profile */
+    .mobile-sticky-action-tray { display: none; position: fixed; bottom: 0; left: 0; width: 100vw; background: #ffffff; border-top: 1px solid #e5e5e5; padding: 12px 16px; z-index: 50; box-shadow: 0 -4px 20px rgba(0,0,0,0.05); }
     
-    #toggle-details:checked ~ #modal-details,
+    #toggle-sizechart:checked ~ #modal-sizechart,
     #toggle-policies:checked ~ #modal-policies,
     #toggle-checkout:checked ~ #modal-checkout { opacity: 1; pointer-events: auto; }
-    
-    #toggle-details:checked ~ #modal-details .yzy-modal-body,
+    #toggle-sizechart:checked ~ #modal-sizechart .yzy-modal-body,
     #toggle-policies:checked ~ #modal-policies .yzy-modal-body,
     #toggle-checkout:checked ~ #modal-checkout .yzy-modal-body-checkout { transform: scale(1); }
-    
+
+    /* Explicit Clean Mobile View Responsive Overrides */
+    @media (max-width: 992px) {
+      html, body { overflow-y: auto !important; height: auto !important; }
+      body { padding-bottom: 125px !important; } 
+      .main-workspace { grid-template-columns: 1fr !important; display: block !important; }
+      .gallery-column { border-right: none; border-bottom: 1px solid #f2f2f2; padding: 24px; width: 100%; }
+      .interface-column { padding: 24px; background: #ffffff; width: 100%; }
+      .gallery-wrapper { height: 45vh; }
+      .mobile-sticky-action-tray { display: flex !important; flex-direction: column; gap: 8px; align-items: stretch; }
+      .interface-column .qty-container { display: none !important; }
+      .app-bottom-bar { margin-bottom: 105px; }
+      .chip-grid { grid-template-columns: repeat(6, 1fr); gap: 4px; }
+    }
     @media (max-width: 768px) {
-      .app-header { padding: 16px; align-items: center; }
-      .product-title { font-size: 18px; text-align: right; }
-      .app-bottom-bar { flex-direction: column; gap: 20px; padding: 16px; align-items: stretch; }
-      .bottom-left { justify-content: space-between; order: 1; }
-      .bottom-right { justify-content: space-between; order: 2; width: 100%; }
-      .btn-buy { flex-grow: 1; margin-left: 12px; padding: 0; }
-      .bottom-center { order: 3; padding-top: 6px; font-size: 9px; opacity: 0.7; }
-      .gallery-wrapper { height: 50vh; }
-      
-      /* Pushes iframe viewport down cleanly on mobile so the minimal X button never overruns content */
-      .yzy-modal-body-checkout { 
-        height: 95dvh; 
-        max-height: none; 
-        padding-top: 60px; 
-      }
-      
-      .yzy-modal-close {
-        top: 12px;
-        right: 12px;
-      }
+      .app-header { padding: 16px; }
+      .product-title { font-size: 15px; max-width: 200px; }
+      .product-price { font-size: 13px; }
+      .app-bottom-bar { flex-direction: column; gap: 16px; padding: 24px 16px 40px; text-align: center; }
+      .bottom-links { justify-content: center; width: 100%; }
+      .yzy-modal-body-checkout { height: 95dvh; max-height: none; padding-top: 60px; }
+      .yzy-modal-close { top: 12px; right: 12px; }
     }
   </style>
 </head>
 <body>
 
-  <input type="checkbox" id="toggle-details" class="css-toggle">
+  <input type="checkbox" id="toggle-sizechart" class="css-toggle">
   <input type="checkbox" id="toggle-policies" class="css-toggle">
   <input type="checkbox" id="toggle-checkout" class="css-toggle">
+  <input type="checkbox" id="toggle-cart" class="css-toggle">
 
   <script>
     const CONFIG = {
-      storeName: "JACK & ROSE DEPOT",
-      productName: "K1 TRAVEL STEAMER",
-      productPrice: "$32.00 USD"
+      storeName: "ANRABESS",
+      productName: "WOMEN ATHLETIC MINI ROMPER DRESS",
+      productPrice: "CAD 27.02"
     };
   </script>
 
   <header class="app-header">
     <a class="logo" href="#" id="ui-store-brand">STORE</a>
-    <div>
-      <h1 class="product-title" id="ui-product-title">PRODUCT</h1>
-      <div class="product-price" id="ui-product-price">$0.00</div>
+    <div class="flex items-center gap-4">
+      <!-- Minimalist Custom SVG Inline Cart System Trigger Token -->
+      <label for="toggle-cart" class="cursor-pointer font-bold text-xs border border-black px-3 py-2 bg-white hover:bg-black hover:text-white transition flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+        </svg>
+        CART (<span id="cart-global-badge">0</span>)
+      </label>
+      <div>
+        <h1 class="product-title" id="ui-product-title">PRODUCT</h1>
+        <div class="product-price" id="ui-product-price">0.00 CAD</div>
+      </div>
     </div>
   </header>
 
-  <main class="app-main">
-    <div class="gallery-wrapper">
-      <div class="main-image-display" id="js-gallery-container"></div>
+  <div class="main-workspace">
+    <!-- Left Display Viewport (Arrows navigate product color directly) -->
+    <section class="gallery-column">
+      <div class="gallery-wrapper">
+        <div class="main-image-display w-full h-full relative" id="js-gallery-container"></div>
 
-      <div class="absolute top-1/2 -left-24 z-50 -translate-y-1/2 max-[1024px]:left-2">
-        <button type="button" class="cursor-pointer text-black" id="js-prev-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" class="size-8" width="1em" height="1em" viewBox="0 0 24 24">
-            <g transform="rotate(-90 12 12)"><path fill="currentColor" d="M11.29 8.71L6.7 13.3a.996.996 0 1 0 1.41 1.41L12 10.83l3.88 3.88a.996.996 0 1 0 1.41-1.41L12.7 8.71a.996.996 0 0 0-1.41 0"></path></g>
-          </svg>
+        <!-- Carousel Switches -->
+        <button type="button" class="absolute left-0 top-1/2 -translate-y-1/2 text-black cursor-pointer z-10 p-2 hover:opacity-50" id="js-prev-btn">
+          <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <button type="button" class="absolute right-0 top-1/2 -translate-y-1/2 text-black cursor-pointer z-10 p-2 hover:opacity-50" id="js-next-btn">
+          <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </button>
       </div>
+    </section>
 
-      <div class="absolute top-1/2 -right-24 z-50 -translate-y-1/2 max-[1024px]:right-2">
-        <button type="button" class="cursor-pointer text-black" id="js-next-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" class="size-8" width="1em" height="1em" viewBox="0 0 24 24">
-            <g transform="rotate(90 12 12)"><path fill="currentColor" d="M11.29 8.71L6.7 13.3a.996.996 0 1 0 1.41 1.41L12 10.83l3.88 3.88a.996.996 0 1 0 1.41-1.41L12.7 8.71a.996.996 0 0 0-1.41 0"></path></g>
-          </svg>
-        </button>
+    <!-- Right Interaction Variable Bar -->
+    <aside class="interface-column">
+      
+      <!-- Color Variable Layer (Compact Circular Swatch Layout) -->
+      <div>
+        <div class="section-label">Color Configuration <span id="lbl-active-color">Gray</span></div>
+        <div class="color-swatch-flex" id="js-color-grid">
+          
+          <div class="color-variant-node">
+            <input type="radio" name="prod-color" id="col-gray" value="Gray" class="css-toggle variant-input" checked>
+            <label for="col-gray" class="color-swatch-circle" title="Gray">
+              <span class="color-preview-inner" style="background-color: #8e8e93;"></span>
+            </label>
+          </div>
+
+          <div class="color-variant-node">
+            <input type="radio" name="prod-color" id="col-armygreen" value="Army Green" class="css-toggle variant-input">
+            <label for="col-armygreen" class="color-swatch-circle" title="Army Green">
+              <span class="color-preview-inner" style="background-color: #4b5320;"></span>
+            </label>
+          </div>
+
+          <div class="color-variant-node">
+            <input type="radio" name="prod-color" id="col-black" value="Black" class="css-toggle variant-input">
+            <label for="col-black" class="color-swatch-circle" title="Black">
+              <span class="color-preview-inner" style="background-color: #1c1c1e;"></span>
+            </label>
+          </div>
+
+          <div class="color-variant-node">
+            <input type="radio" name="prod-color" id="col-blue" value="Blue" class="css-toggle variant-input">
+            <label for="col-blue" class="color-swatch-circle" title="Blue">
+              <span class="color-preview-inner" style="background-color: #007aff;"></span>
+            </label>
+          </div>
+
+          <div class="color-variant-node">
+            <input type="radio" name="prod-color" id="col-coffee" value="Coffee" class="css-toggle variant-input">
+            <label for="col-coffee" class="color-swatch-circle" title="Coffee">
+              <span class="color-preview-inner" style="background-color: #4a3b32;"></span>
+            </label>
+          </div>
+
+          <div class="color-variant-node">
+            <input type="radio" name="prod-color" id="col-cyan" value="Cyan" class="css-toggle variant-input">
+            <label for="col-cyan" class="color-swatch-circle" title="Cyan">
+              <span class="color-preview-inner" style="background-color: #00a896;"></span>
+            </label>
+          </div>
+
+          <div class="color-variant-node hidden-row">
+            <input type="radio" name="prod-color" id="col-navyblue" value="Navy Blue" class="css-toggle variant-input">
+            <label for="col-navyblue" class="color-swatch-circle" title="Navy Blue">
+              <span class="color-preview-inner" style="background-color: #000080;"></span>
+            </label>
+          </div>
+
+          <div class="color-variant-node hidden-row">
+            <input type="radio" name="prod-color" id="col-orange" value="Orange" class="css-toggle variant-input">
+            <label for="col-orange" class="color-swatch-circle" title="Orange">
+              <span class="color-preview-inner" style="background-color: #ff9500;"></span>
+            </label>
+          </div>
+
+          <div class="color-variant-node hidden-row">
+            <input type="radio" name="prod-color" id="col-pink" value="Pink" class="css-toggle variant-input">
+            <label for="col-pink" class="color-swatch-circle" title="Pink">
+              <span class="color-preview-inner" style="background-color: #ffc0cb;"></span>
+            </label>
+          </div>
+
+          <div class="color-variant-node hidden-row">
+            <input type="radio" name="prod-color" id="col-purple" value="Purple" class="css-toggle variant-input">
+            <label for="col-purple" class="color-swatch-circle" title="Purple">
+              <span class="color-preview-inner" style="background-color: #af52de;"></span>
+            </label>
+          </div>
+
+          <div class="color-variant-node hidden-row">
+            <input type="radio" name="prod-color" id="col-red" value="Red" class="css-toggle variant-input">
+            <label for="col-red" class="color-swatch-circle" title="Red">
+              <span class="color-preview-inner" style="background-color: #ff3b30;"></span>
+            </label>
+          </div>
+
+          <div class="color-variant-node hidden-row">
+            <input type="radio" name="prod-color" id="col-royalblue" value="Royal Blue" class="css-toggle variant-input">
+            <label for="col-royalblue" class="color-swatch-circle" title="Royal Blue">
+              <span class="color-preview-inner" style="background-color: #4169e1;"></span>
+            </label>
+          </div>
+
+          <div class="color-variant-node hidden-row">
+            <input type="radio" name="prod-color" id="col-rust" value="Rust" class="css-toggle variant-input">
+            <label for="col-rust" class="color-swatch-circle" title="Rust">
+              <span class="color-preview-inner" style="background-color: #b7410e;"></span>
+            </label>
+          </div>
+
+          <div class="color-variant-node hidden-row">
+            <input type="radio" name="prod-color" id="col-teal" value="Teal" class="css-toggle variant-input">
+            <label for="col-teal" class="color-swatch-circle" title="Teal">
+              <span class="color-preview-inner" style="background-color: #008080;"></span>
+            </label>
+          </div>
+
+          <div class="color-variant-node hidden-row">
+            <input type="radio" name="prod-color" id="col-white" value="White" class="css-toggle variant-input">
+            <label for="col-white" class="color-swatch-circle" title="White">
+              <span class="color-preview-inner" style="background-color: #ffffff; border: 1px solid #ddd;"></span>
+            </label>
+          </div>
+
+        </div>
+        <button type="button" class="btn-more-colors" id="js-more-colors-btn">More Colors +</button>
       </div>
+
+      <!-- Size Variable Layer (Streamlined Row) -->
+      <div>
+        <div class="section-label">Size Configuration <span id="lbl-active-size">M</span></div>
+        <div class="chip-grid">
+          <input type="radio" name="prod-size" id="sz-xs" value="X-Small" class="css-toggle variant-input">
+          <label for="sz-xs" class="selector-chip">XS</label>
+
+          <input type="radio" name="prod-size" id="sz-s" value="Small" class="css-toggle variant-input">
+          <label for="sz-s" class="selector-chip">S</label>
+
+          <input type="radio" name="prod-size" id="sz-m" value="Medium" class="css-toggle variant-input" checked>
+          <label for="sz-m" class="selector-chip">M</label>
+
+          <input type="radio" name="prod-size" id="sz-l" value="Large" class="css-toggle variant-input">
+          <label for="sz-l" class="selector-chip">L</label>
+
+          <input type="radio" name="prod-size" id="sz-xl" value="X-Large" class="css-toggle variant-input">
+          <label for="sz-xl" class="selector-chip">XL</label>
+
+          <input type="radio" name="prod-size" id="sz-xxl" value="XX-Large" class="css-toggle variant-input">
+          <label for="sz-xxl" class="selector-chip">XXL</label>
+        </div>
+        <div class="mt-2 text-right">
+          <label for="toggle-sizechart" class="text-[10px] font-bold uppercase underline tracking-wider text-stone-500 hover:text-black cursor-pointer">+ View Comprehensive Sizing Guide</label>
+        </div>
+      </div>
+
+      <!-- Core Specification Ledger -->
+      <div class="text-[12px] text-stone-600 space-y-3 border-t border-b border-stone-200 py-4 my-2">
+        <p><strong>Composition Matrix:</strong> 60% Polyester, 35% Rayon, 5% Spandex performance blend.</p>
+        <p><strong>Features:</strong> Built-in interior compression shapewear romper shorts with structural side cell pockets. Adjustable micro spaghetti upper strap profile.</p>
+      </div>
+
+      <!-- Desktop Transaction Allocation Controls -->
+      <div class="flex flex-col gap-3 pt-2">
+        <div class="flex items-center gap-3 w-full">
+          <div class="qty-container">
+            <button type="button" class="qty-btn" id="qty-minus">−</button>
+            <input type="text" id="ui-qty-input" class="qty-input" value="1" readonly>
+            <button type="button" class="qty-btn" id="qty-plus">+</button>
+          </div>
+          <button type="button" class="btn-secondary js-add-to-cart-trigger">Add to Cart</button>
+        </div>
+        <label for="toggle-checkout" class="btn-buy w-full text-center js-instant-checkout-trigger">Instant Buy Now</label>
+      </div>
+
+    </aside>
+  </div>
+
+  <!-- Mobile Sticky Action Conversion Tray -->
+  <div class="mobile-sticky-action-tray">
+    <div class="flex items-center gap-3 w-full">
+      <div class="qty-container !h-[42px] !w-[100px]">
+        <button type="button" class="qty-btn" id="qty-minus-mobile">−</button>
+        <input type="text" id="ui-qty-input-mobile" class="qty-input !w-[30px]" value="1" readonly>
+        <button type="button" class="qty-btn" id="qty-plus-mobile">+</button>
+      </div>
+      <button type="button" class="btn-secondary !h-[42px] js-add-to-cart-trigger">Add to Cart</button>
     </div>
-    <div class="gallery-counter" id="js-gallery-counter"></div>
-  </main>
+    <label for="toggle-checkout" class="btn-buy !h-[42px] w-full text-center js-instant-checkout-trigger">Buy Now</label>
+  </div>
 
   <footer class="app-bottom-bar">
-    <div class="bottom-left">
-      <label for="toggle-details" class="ui-link">+ Details</label>
-      <label for="toggle-policies" class="ui-link">+ Policies</label>
+    <div class="bottom-links">
+      <label for="toggle-sizechart" class="ui-link">Size Chart</label>
+      <span class="link-divider">|</span>
+      <label for="toggle-policies" class="ui-link">Fulfillment Policies</label>
     </div>
-    <div class="bottom-center">© 2026 JACK & ROSE DEPOT</div>
+    <div class="bottom-center">© 2026 ANRABESS OFFICIAL</div>
     <div class="bottom-right">
-      <div class="qty-container">
-        <button type="button" class="qty-btn" id="qty-minus">−</button>
-        <input type="text" id="ui-qty-input" class="qty-input" value="1" readonly>
-        <button type="button" class="qty-btn" id="qty-plus">+</button>
-      </div>
-      <label for="toggle-checkout" class="btn-buy" id="open-modal-btn">Buy Now</label>
+      <span class="text-[10px] uppercase font-bold text-stone-400 tracking-wider">Secure Checkout Pipeline Layer</span>
     </div>
   </footer>
 
-  <div class="yzy-overlay" id="modal-details">
-    <label for="toggle-details" class="overlay-bg-close"></label>
-    <div class="yzy-modal-body">
-      <label for="toggle-details" class="yzy-modal-close"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M2 2L14 14M2 14L14 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg></label>
-      <h2 class="modal-title">Product Specifications</h2>
-      <div class="modal-text-block">
-        <h4>100V-220V Global Voltage Architecture</h4>
-        <p>Jack & Rose pioneered 100V-220V wide voltage technology. Features a fully automatic adaptation layer—plug and play anywhere abroad without the need for external voltage conversion hardware.</p>
+  <!-- Sidebar Component Terminal: Multi Item Cart Architecture -->
+  <div class="cart-drawer-overlay">
+    <label for="toggle-cart" class="absolute inset-0 cursor-pointer"></label>
+    <div class="cart-drawer-body p-6">
+      <div class="flex justify-between items-center border-b border-stone-200 pb-4 mb-4">
+        <h3 class="font-bold text-sm uppercase tracking-wider">Your Terminal Cart</h3>
+        <label for="toggle-cart" class="cursor-pointer font-bold text-lg">×</label>
       </div>
-      <div class="modal-text-block">
-        <h4>High Temperature & Velocity Steam Matrix</h4>
-        <p>Engineered with 1,000 Watts of localized power heating up in 15 seconds flat. Releases high-temperature, high-velocity steam reaching up to 248°F combined with a 10-square-inch dry ironing ceramic heating panel.</p>
-      </div>
-      <div class="modal-text-block">
-        <h4>Travel Size Form Factor</h4>
-        <p>Compact, minimalist design measuring 10.23 x 3.9 inches and weighing only 1.6 lbs (equivalent to a 750ml mineral water bottle). Features a rotating head system to maximize travel packing spaces.</p>
+      
+      <!-- Cart item append node -->
+      <div id="js-cart-items-wrapper" class="flex-grow overflow-y-auto space-y-4 pr-1"></div>
+
+      <div class="border-t border-stone-200 pt-4 mt-4">
+        <div class="flex justify-between items-center font-bold text-sm uppercase tracking-wider mb-4">
+          <span>Aggregate Subtotal:</span>
+          <span id="js-cart-total-display">0.00 CAD</span>
+        </div>
+        <label for="toggle-checkout" id="js-cart-checkout-btn" class="btn-buy w-full text-center">Proceed to Allocation Checkout</label>
       </div>
     </div>
   </div>
 
+  <!-- Modal: Size Chart Matrix Layer -->
+  <div class="yzy-overlay" id="modal-sizechart">
+    <label for="toggle-sizechart" class="overlay-bg-close"></label>
+    <div class="yzy-modal-body">
+      <label for="toggle-sizechart" class="yzy-modal-close"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2L14 14M2 14L14 2" stroke="currentColor" stroke-width="1.5"/></svg></label>
+      <h2 class="modal-title">Product & Body Dimensions Matrix</h2>
+      
+      <div class="modal-text-block">
+        <h4>Product Measurements Framework</h4>
+        <table class="spec-table">
+          <thead>
+            <tr><th>Size</th><th>US Equiv</th><th>Bust (in)</th><th>Waist (in)</th><th>Hip (in)</th><th>Length (in)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>XS</td><td>(0-2)</td><td>34.6</td><td>26.4</td><td>43.3</td><td>27.2</td></tr>
+            <tr><td>S</td><td>(4-6)</td><td>36.6</td><td>28.4</td><td>45.3</td><td>27.8</td></tr>
+            <tr><td>M</td><td>(8-10)</td><td>38.6</td><td>30.3</td><td>47.2</td><td>28.4</td></tr>
+            <tr><td>L</td><td>(12-14)</td><td>40.9</td><td>32.7</td><td>49.6</td><td>28.9</td></tr>
+            <tr><td>XL</td><td>(16-18)</td><td>44.1</td><td>35.8</td><td>52.8</td><td>29.5</td></tr>
+            <tr><td>XXL</td><td>(20-22)</td><td>47.2</td><td>39.0</td><td>55.9</td><td>30.1</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-text-block mt-6">
+        <h4>Anatomical Target Body Range</h4>
+        <table class="spec-table">
+          <thead>
+            <tr><th>Size</th><th>US Equiv</th><th>Bust Range</th><th>Waist Range</th><th>Hip Range</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>XS</td><td>(0-2)</td><td>31.9-33.1</td><td>24.4-25.6</td><td>35.0-36.2</td></tr>
+            <tr><td>S</td><td>(4-6)</td><td>33.9-35.0</td><td>26.4-27.6</td><td>37.0-38.2</td></tr>
+            <tr><td>M</td><td>(8-10)</td><td>35.8-37.0</td><td>28.4-29.5</td><td>39.0-40.2</td></tr>
+            <tr><td>L</td><td>(12-14)</td><td>38.2-39.4</td><td>30.7-31.9</td><td>41.3-42.5</td></tr>
+            <tr><td>XL</td><td>(16-18)</td><td>41.3-42.5</td><td>33.9-35.0</td><td>44.5-45.7</td></tr>
+            <tr><td>XXL</td><td>(20-22)</td><td>44.5-45.7</td><td>37.0-38.2</td><td>47.6-48.8</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Policies -->
   <div class="yzy-overlay" id="modal-policies">
     <label for="toggle-policies" class="overlay-bg-close"></label>
     <div class="yzy-modal-body">
-      <label for="toggle-policies" class="yzy-modal-close"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M2 2L14 14M2 14L14 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg></label>
-      <h2 class="modal-title">Legal & Policies</h2>
+      <label for="toggle-policies" class="yzy-modal-close"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2L14 14M2 14L14 2" stroke="currentColor" stroke-width="1.5"/></svg></label>
+      <h2 class="modal-title">Fulfillment Architecture</h2>
       <div class="modal-text-block">
-        <h4>Terms of Service</h4>
-        <p>By entering and fulfilling an order allocation on this single terminal platform, you acknowledge and accept our verified secure dispatch arrangements.</p>
-      </div>
-      <div class="modal-text-block">
-        <h4>FREE 30-Day Returns & Replacement</h4>
-        <p>All items undergo strict structural processing checkmarks. If your item arrives flawed, we fully guarantee a free replacement or complete reimbursement window for up to 30 days.</p>
-      </div>
-      <div class="modal-text-block">
-        <h4>Logistics & Secure Handling</h4>
-        <p>Orders are packaged safely in premium protection cases. Registered shipping lines populate live tracking codes directly to your destination metrics upon allocation approval.</p>
+        <h4>Refund & Return Conditions</h4>
+        <p>All items undergo precise quality inspections. Defective variables are fully covered under our transparent 30-day replacement sequence ledger framework.</p>
       </div>
     </div>
   </div>
 
+  <!-- Modal: Checkout Terminal Screen Frame -->
   <div class="yzy-overlay" id="modal-checkout">
     <label for="toggle-checkout" class="overlay-bg-close"></label>
-    <label for="toggle-checkout" class="yzy-modal-close"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M2 2L14 14M2 14L14 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg></label>
     <div class="yzy-modal-body-checkout">
+      <label for="toggle-checkout" class="yzy-modal-close"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2L14 14M2 14L14 2" stroke="currentColor" stroke-width="1.5"/></svg></label>
       <iframe src="about:blank" id="js-checkout-iframe" class="w-full h-full border-none"></iframe>
     </div>
   </div>
@@ -236,36 +486,236 @@
       document.getElementById("ui-product-title").innerText = CONFIG.productName;
       document.getElementById("ui-product-price").innerText = CONFIG.productPrice;
 
+      const GALLERY_MAP = {
+        "Gray": ["https://m.media-amazon.com/images/I/61nKzdkK2+L._AC_SY879_.jpg"],
+        "Army Green": ["https://m.media-amazon.com/images/I/71xGSjs4atL._AC_SY879_.jpg"],
+        "Black": ["https://m.media-amazon.com/images/I/61Fl1uveSGL._AC_SY879_.jpg"],
+        "Blue": ["https://m.media-amazon.com/images/I/61PuNcmTpEL._AC_SY879_.jpg"],
+        "Coffee": ["https://m.media-amazon.com/images/I/71RmpTnNWUL._AC_SY879_.jpg"],
+        "Cyan": ["https://m.media-amazon.com/images/I/61Gs4blGdDL._AC_SY879_.jpg"],
+        "Navy Blue": ["https://m.media-amazon.com/images/I/61hWgehLc-L._AC_SY879_.jpg"],
+        "Orange": ["https://m.media-amazon.com/images/I/61oBmhnz+LL._AC_SY879_.jpg"],
+        "Pink": ["https://m.media-amazon.com/images/I/61q1pRmyzML._AC_SY879_.jpg"],
+        "Purple": ["https://m.media-amazon.com/images/I/71htzo9hJ6L._AC_SY879_.jpg"],
+        "Red": ["https://m.media-amazon.com/images/I/61rBbJGH1EL._AC_SY879_.jpg"],
+        "Royal Blue": ["https://m.media-amazon.com/images/I/61V1GT0Y81L._AC_SY879_.jpg"],
+        "Rust": ["https://m.media-amazon.com/images/I/71Sab0yuzjL._AC_SY879_.jpg"],
+        "Teal": ["https://m.media-amazon.com/images/I/71rDkFantEL._AC_SY879_.jpg"],
+        "White": ["https://m.media-amazon.com/images/I/61OJ9cWdT7L._AC_SY879_.jpg"]
+      };
+
+      const COLORS_KEYS = Object.keys(GALLERY_MAP);
+      let CART = [];
+
+      // Grid Expand Logic (More Colors Toggle)
+      document.getElementById("js-more-colors-btn").addEventListener("click", function() {
+        const hiddenNodes = document.querySelectorAll(".color-variant-node.hidden-row");
+        hiddenNodes.forEach(node => node.classList.remove("hidden-row"));
+        this.style.display = "none";
+      });
+
+      function getSelectedColor() {
+        return document.querySelector('input[name="prod-color"]:checked').value;
+      }
+
+      function syncGalleryToSelectedColor() {
+        const activeColor = getSelectedColor();
+        const container = document.getElementById("js-gallery-container");
+        container.innerHTML = "";
+        const currentImages = GALLERY_MAP[activeColor] || [];
+        
+        currentImages.forEach((src) => {
+          const img = document.createElement("img");
+          img.src = src;
+          img.className = "gallery-img active";
+          container.appendChild(img);
+        });
+        document.getElementById("lbl-active-color").innerText = activeColor;
+      }
+
+      // Arrows select color logic
+      function shiftColorSelection(direction) {
+        const currentColor = getSelectedColor();
+        let currentIndex = COLORS_KEYS.indexOf(currentColor);
+        
+        let nextIndex = (currentIndex + direction + COLORS_KEYS.length) % COLORS_KEYS.length;
+        const nextColorKey = COLORS_KEYS[nextIndex];
+        
+        const targetRadio = document.querySelector(`input[name="prod-color"][value="${nextColorKey}"]`);
+        if (targetRadio) {
+          const targetWrapper = targetRadio.closest('.color-variant-node');
+          if (targetWrapper && targetWrapper.classList.contains('hidden-row')) {
+            targetWrapper.classList.remove('hidden-row');
+          }
+          
+          targetRadio.checked = true;
+          syncGalleryToSelectedColor();
+        }
+      }
+
+      document.getElementById("js-prev-btn").addEventListener("click", function() { shiftColorSelection(-1); });
+      document.getElementById("js-next-btn").addEventListener("click", function() { shiftColorSelection(1); });
+
+      document.querySelectorAll('input[name="prod-color"]').forEach(radio => {
+        radio.addEventListener("change", syncGalleryToSelectedColor);
+      });
+
+      document.querySelectorAll('input[name="prod-size"]').forEach(radio => {
+        radio.addEventListener("change", function() {
+          document.getElementById("lbl-active-size").innerText = this.value;
+        });
+      });
+
+      syncGalleryToSelectedColor();
+
       function calculateTotal(quantity) {
         var priceStr = CONFIG.productPrice;
         var basePrice = parseFloat(priceStr.replace(/[^0-9.]/g, '')) || 0;
         var totalCost = basePrice * parseInt(quantity);
         var suffixStr = (priceStr.match(/[A-Za-z ]+$/) || [""])[0];
         var prefixStr = (priceStr.match(/^[^0-9.]+/) || [""])[0];
-        return { totalFormatted: prefixStr + totalCost.toFixed(2) + " " + suffixStr, baseFormatted: priceStr };
+        return { totalFormatted: prefixStr + totalCost.toFixed(2) + " " + suffixStr };
       }
 
-      function updateQty(change) {
-        const input = document.getElementById("ui-qty-input");
-        let current = parseInt(input.value) || 1;
-        current += change;
-        if (current < 1) current = 1;
-        input.value = current;
+      function synchronizeQty(targetValue) {
+        if (targetValue < 1) targetValue = 1;
+        document.getElementById("ui-qty-input").value = targetValue;
+        document.getElementById("ui-qty-input-mobile").value = targetValue;
       }
-      document.getElementById('qty-minus').addEventListener('click', function() { updateQty(-1); });
-      document.getElementById('qty-plus').addEventListener('click', function() { updateQty(1); });
 
-      document.getElementById("open-modal-btn").addEventListener("click", function() {
-        const currentQty = document.getElementById("ui-qty-input").value;
-        const billingData = calculateTotal(currentQty);
+      function handleQtyStep(change) {
+        const currentVal = parseInt(document.getElementById("ui-qty-input").value) || 1;
+        synchronizeQty(currentVal + change);
+      }
+
+      document.getElementById('qty-minus').addEventListener('click', function() { handleQtyStep(-1); });
+      document.getElementById('qty-plus').addEventListener('click', function() { handleQtyStep(1); });
+      document.getElementById('qty-minus-mobile').addEventListener('click', function() { handleQtyStep(-1); });
+      document.getElementById('qty-plus-mobile').addEventListener('click', function() { handleQtyStep(1); });
+
+      /* Cart Logic with In-Cart Quantity Changers */
+      function updateCartUI() {
+        const wrapper = document.getElementById("js-cart-items-wrapper");
+        wrapper.innerHTML = "";
         
+        let totalCount = 0;
+        let totalCost = 0;
+        const basePrice = parseFloat(CONFIG.productPrice.replace(/[^0-9.]/g, '')) || 0;
+
+        if (CART.length === 0) {
+          wrapper.innerHTML = `<div class="text-xs text-stone-400 uppercase tracking-wider py-8 text-center">Cart state empty</div>`;
+          document.getElementById("js-cart-checkout-btn").style.pointerEvents = "none";
+          document.getElementById("js-cart-checkout-btn").style.opacity = "0.5";
+        } else {
+          document.getElementById("js-cart-checkout-btn").style.pointerEvents = "auto";
+          document.getElementById("js-cart-checkout-btn").style.opacity = "1";
+        }
+
+        CART.forEach((item, index) => {
+          totalCount += item.qty;
+          totalCost += (basePrice * item.qty);
+
+          const block = document.createElement("div");
+          block.className = "flex gap-3 bg-stone-50 p-3 border border-stone-200 relative";
+          block.innerHTML = `
+            <img src="${item.img}" class="w-12 h-16 object-contain bg-white border border-stone-100 flex-shrink-0">
+            <div class="flex-grow flex flex-col justify-center">
+              <div class="text-[11px] font-bold uppercase leading-tight truncate max-w-[200px]">${item.name}</div>
+              <div class="text-[10px] text-stone-500 uppercase mt-0.5">Var: ${item.color} / ${item.size}</div>
+              <div class="text-[11px] font-bold mt-1">CAD ${(basePrice * item.qty).toFixed(2)}</div>
+              
+              <div class="cart-qty-container">
+                <button type="button" class="cart-qty-btn js-cart-minus" data-index="${index}">-</button>
+                <input type="text" class="cart-qty-input" value="${item.qty}" readonly>
+                <button type="button" class="cart-qty-btn js-cart-plus" data-index="${index}">+</button>
+              </div>
+            </div>
+            <button type="button" class="absolute top-2 right-3 font-bold text-xs text-stone-400 hover:text-black js-cart-remove" data-index="${index}">×</button>
+          `;
+          wrapper.appendChild(block);
+        });
+
+        document.getElementById("cart-global-badge").innerText = totalCount;
+        document.getElementById("js-cart-total-display").innerText = "CAD " + totalCost.toFixed(2);
+        
+        wrapper.querySelectorAll(".js-cart-minus").forEach(btn => {
+          btn.addEventListener("click", function() {
+            const idx = parseInt(this.getAttribute("data-index"));
+            if (CART[idx].qty > 1) {
+              CART[idx].qty--;
+              updateCartUI();
+            }
+          });
+        });
+
+        wrapper.querySelectorAll(".js-cart-plus").forEach(btn => {
+          btn.addEventListener("click", function() {
+            const idx = parseInt(this.getAttribute("data-index"));
+            CART[idx].qty++;
+            updateCartUI();
+          });
+        });
+
+        wrapper.querySelectorAll(".js-cart-remove").forEach(btn => {
+          btn.addEventListener("click", function() {
+            const idx = parseInt(this.getAttribute("data-index"));
+            CART.splice(idx, 1);
+            updateCartUI();
+          });
+        });
+      }
+
+      document.querySelectorAll(".js-add-to-cart-trigger").forEach(btn => {
+        btn.addEventListener("click", function() {
+          const qty = parseInt(document.getElementById("ui-qty-input").value) || 1;
+          const selectedColor = getSelectedColor();
+          const size = document.querySelector('input[name="prod-size"]:checked')?.value || "Medium";
+          const img = GALLERY_MAP[selectedColor][0];
+
+          const existing = CART.find(item => item.color === selectedColor && item.size === size);
+          if (existing) {
+            existing.qty += qty;
+          } else {
+            CART.push({ name: CONFIG.productName, color: selectedColor, size: size, qty: qty, img: img });
+          }
+          
+          updateCartUI();
+          document.getElementById("toggle-cart").checked = true; 
+        });
+      });
+
+      document.getElementById("js-cart-checkout-btn").addEventListener("click", function() {
+        const payloadString = JSON.stringify(CART);
+        let aggregateCost = 0;
+        const basePrice = parseFloat(CONFIG.productPrice.replace(/[^0-9.]/g, '')) || 0;
+        CART.forEach(i => aggregateCost += (basePrice * i.qty));
+
         const targetParams = new URLSearchParams({
-          prod: CONFIG.productName,
-          qty: currentQty,
-          price: billingData.totalFormatted.trim()
+          manifest: payloadString,
+          price: "CAD " + aggregateCost.toFixed(2),
+          multi: "true"
         });
         
         document.getElementById("js-checkout-iframe").src = "checkout.html?" + targetParams.toString();
+      });
+
+      document.querySelectorAll(".js-instant-checkout-trigger").forEach(btn => {
+        btn.addEventListener("click", function() {
+          const currentQty = document.getElementById("ui-qty-input").value;
+          const billingData = calculateTotal(currentQty);
+          const selectedColor = getSelectedColor();
+          const selectedSize = document.querySelector('input[name="prod-size"]:checked')?.value || "Medium";
+          
+          const instantManifest = [{ name: CONFIG.productName, color: selectedColor, size: selectedSize, qty: parseInt(currentQty), img: GALLERY_MAP[selectedColor][0] }];
+
+          const targetParams = new URLSearchParams({
+            manifest: JSON.stringify(instantManifest),
+            price: billingData.totalFormatted.trim(),
+            multi: "false"
+          });
+          
+          document.getElementById("js-checkout-iframe").src = "checkout.html?" + targetParams.toString();
+        });
       });
     });
   </script>
